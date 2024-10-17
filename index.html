@@ -8,6 +8,7 @@
 
     <!-- ICON -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- CSS -->
     <link rel="stylesheet" href="asset/style/style.css">
@@ -29,13 +30,27 @@
             </div>
 
             <div class="menu">
-                <i class='bx bx-menu bx-lg'></i>
+                <button><i class='bx bx-menu bx-lg'></i></button>
+            
+                <ul id="menu-list" class="hidden">
+                    <li class="menu-item"><a href="index.html">Check-In</a></li>
+                    <li class="menu-item"><a href="check-out">Check-Out</a></li>
+                    <li class="menu-item"><a href="statistik">Statistik Parkir</a></li>
+                </ul>
             </div>
         </nav>
     </header>
 
     <main>
+        <div class="text-center">
+            <h1 class="title">CHECK-IN</h1>
+            <h2 class="text-choice">Pilih Kendaraan Anda</h2>
+        </div>
 
+        <div class="kendaraan">
+            <button><i class="fa-solid fa-car-side"></i></button>
+            <button><i class="fa-solid fa-motorcycle"></i></button>
+        </div>
     </main>
 </body>
 
