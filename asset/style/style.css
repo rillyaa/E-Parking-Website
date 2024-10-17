@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    font-family: 'Poppins';
+}
+
+body {
+    background-image: url("/asset/img/bg.png");
+    background-size: cover;
+}
+
+/* Navbar */
+nav {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .logo {
+    padding: 20px;
+
+}
+
+nav .logo img {
+    height: 78px;
+}
+
+.menu {
+    color: white;
+    cursor: pointer;
+    padding-right: 20px;
+}
