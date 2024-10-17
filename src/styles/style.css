@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    font-family: 'Poppins';
+    text-decoration: none;
+    list-style: none;
+}
+
+h1{
+    font-size: 58px;
+}
+
+h2{
+    font-size: 40px;
+}
+
+button{
+    border: none;
+    background-color: transparent;
+}
+
+body {
+    background-image: url("../public/img/bg.png");
+    background-size: cover;
+}
+
+.text-center{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.container-card{
+    padding-top: 80px;
+    display: flex;
+    /* justify-content: space-evenly; */
+    justify-content: center;
+    column-gap: 120px;
+    align-items: center;
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    height: 320px;
+    width: 360px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-card .card button img{
+    height: 200px;
+}
+
+.container-card #car-card{
+    background-color: rgba(131, 195, 91, 0.5);
+}
+
+.container-card #motor-card{
+    background-color: rgba(57, 189, 189, 0.5)
+}
