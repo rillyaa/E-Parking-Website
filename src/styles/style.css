@@ -23,7 +23,7 @@ body {
     background-size: cover;
 }
 
-.text-center{
+/* .text-center{
     color: white;
     display: flex;
     flex-direction: column;
@@ -34,7 +34,6 @@ body {
 .container-card{
     padding-top: 80px;
     display: flex;
-    /* justify-content: space-evenly; */
     justify-content: center;
     column-gap: 120px;
     align-items: center;
@@ -61,4 +60,4 @@ body {
 
 .container-card #motor-card{
     background-color: rgba(57, 189, 189, 0.5)
-}
+} */

@@ -5,7 +5,24 @@ class appBar extends HTMLElement {
   
       const nav = document.createElement('nav');
       nav.innerHTML = `
-        <style>
+        <div class="logo">
+          <img src="/img/logo-polda.png" alt="logo-polda">
+          <img src="/img/logo_bid-tik.png" alt="logo-bid-tik">
+        </div>
+  
+        <div class="menu">
+          <button id="menu-toggle"><box-icon name='menu' color='white'></box-icon></button>
+  
+          <ul id="menu-list" class="hidden">
+            <li class="menu-item"><a href="#">Check-In</a></li>
+            <li class="menu-item"><a href="check-out">Check-Out</a></li>
+            <li class="menu-item"><a href="statistik">Statistik Parkir</a></li>
+          </ul>
+        </div>
+      `;
+
+      const style = document.createElement('style')
+      style.textContent = `
           * {
             margin: 0;
             font-family: 'Poppins';
@@ -56,26 +73,11 @@ class appBar extends HTMLElement {
             color: white;
             font-size: 18px;
           }
-        </style>
-  
-        <div class="logo">
-          <img src="/img/logo-polda.png" alt="logo-polda">
-          <img src="/img/logo_bid-tik.png" alt="logo-bid-tik">
-        </div>
-  
-        <div class="menu">
-          <button id="menu-toggle"><box-icon name='menu'></box-icon></button>
-  
-          <ul id="menu-list" class="hidden">
-            <li class="menu-item"><a href="#">Check-In</a></li>
-            <li class="menu-item"><a href="check-out">Check-Out</a></li>
-            <li class="menu-item"><a href="statistik">Statistik Parkir</a></li>
-          </ul>
-        </div>
-      `;
+        `;
   
       // Append the nav to the shadow DOM
       shadow.appendChild(nav);
+      shadow.appendChild(style);
   
       // Add event listener for the menu toggle
       const menuButton = shadow.querySelector('#menu-toggle');
