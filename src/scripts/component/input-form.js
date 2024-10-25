@@ -4,6 +4,7 @@ class inputForm extends HTMLElement {
         const shadow = this.attachShadow({ mode: 'open' });       
 
         const form = document.createElement('form');
+        form.id = "guest-book-form";
         form.innerHTML = `        
         <div class="text-center">
             <h2 class="title">Buku Tamu Pengunjung</h2>
@@ -11,11 +12,10 @@ class inputForm extends HTMLElement {
         </div>
 
         <div class="container-form">
-            <form action="" method="post">
-                <fieldset>
+            <fieldset>
                     <p>
                         <label for="name">Nama Lengkap</label><br>
-                        <input type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" autocomplete="off">
+                        <input type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" required autocomplete="off">
                     </p>
                     <p>
                         <label for="address">Alamat</label><br>
@@ -32,8 +32,7 @@ class inputForm extends HTMLElement {
                     <p><br>
                         <button type="submit" name="submit" value="Submit">Submit</button>
                     </p>
-                </fieldset>
-            </form>
+            </fieldset>
         </div>
     `;
 
@@ -42,6 +41,16 @@ class inputForm extends HTMLElement {
 
     shadow.appendChild(form);
     shadow.appendChild(style);
+
+    // Tangkap elemen form dan tambahkan event listener submit
+    const guestBookForm = shadow.querySelector('#guest-book-form');
+    
+    guestBookForm.addEventListener('submit', (event) => {
+        event.preventDefault();  // Mencegah form refresh halaman
+
+        // Redirect ke halaman check-in
+        window.location.hash = '#checkin';
+    });
     }
 }
 
