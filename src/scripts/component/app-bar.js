@@ -5,7 +5,7 @@ class appBar extends HTMLElement {
   
       const nav = document.createElement('nav');
       nav.innerHTML = `
-        <div class="logo">
+        <div class="logo" id="logo">
           <img src="/img/logo-polda.png" alt="logo-polda">
           <img src="/img/logo_bid-tik.png" alt="logo-bid-tik">
         </div>
@@ -14,7 +14,6 @@ class appBar extends HTMLElement {
           <button id="menu-toggle"><box-icon name='menu' color='white'></box-icon></button>
   
           <ul id="menu-list" class="hidden">
-            <li class="menu-item"><a href="#">Check-In</a></li>
             <li class="menu-item"><a href="check-out">Check-Out</a></li>
             <li class="menu-item"><a href="statistik">Statistik Parkir</a></li>
           </ul>
@@ -85,6 +84,11 @@ class appBar extends HTMLElement {
       
       menuButton.addEventListener('click', () => {
         menuList.classList.toggle('hidden');
+      });
+
+      const logo = shadow.querySelector('#logo');
+        logo.addEventListener('click', () => {
+            window.location.hash = '#';
       });
     }
   }

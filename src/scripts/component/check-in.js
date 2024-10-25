@@ -65,7 +65,7 @@ class checkIn extends HTMLElement {
     `;
 
         shadow.appendChild(checkin);
-        shadow.appendChild(style);
+        shadow.appendChild(style);        
     }
 }
 
