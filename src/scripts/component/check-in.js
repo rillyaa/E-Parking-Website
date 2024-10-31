@@ -1,5 +1,3 @@
-import Swal from 'sweetalert2'
-
 class checkIn extends HTMLElement {
     constructor() {
         super();
@@ -37,7 +35,6 @@ class checkIn extends HTMLElement {
         .container-card{
             padding-top: 80px;
             display: flex;
-            /* justify-content: space-evenly; */
             justify-content: center;
             column-gap: 120px;
             align-items: center;
