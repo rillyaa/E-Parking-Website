@@ -1,4 +1,4 @@
-class AppBar extends HTMLElement {
+class appBar extends HTMLElement {
   constructor() {
       super();
       const shadow = this.attachShadow({ mode: 'open' });
@@ -202,4 +202,4 @@ class AppBar extends HTMLElement {
   }
 }
 
-customElements.define('app-bar', AppBar);
+customElements.define('app-bar', appBar);
