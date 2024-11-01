@@ -49,7 +49,7 @@ class inputForm extends HTMLElement {
         event.preventDefault();  // Mencegah form refresh halaman
 
         // Redirect ke halaman check-in
-        window.location.hash = '#checkin';
+        window.location.hash = '#check-in';
     });
     }
 }
