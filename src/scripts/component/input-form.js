@@ -155,9 +155,9 @@ class inputForm extends HTMLElement {
         guestBookForm.addEventListener('submit', (event) => {
             event.preventDefault();  // Mencegah form refresh halaman
 
-            // Redirect ke halaman check-in
-            window.location.hash = '#checkin';
-        });
+        // Redirect ke halaman check-in
+        window.location.hash = '#check-in';
+    });
     }
 }
 
