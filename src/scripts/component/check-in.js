@@ -109,6 +109,10 @@ class checkIn extends HTMLElement {
 
         /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
         @media screen and (min-width: 576px) and (max-width: 768px){
+            .text-center{
+                row-gap: 12px;
+            }
+
             .container-card {
                 flex-direction: column;
                 row-gap: 12px;
@@ -127,6 +131,10 @@ class checkIn extends HTMLElement {
 
         /* Untuk layar lebih besar dari 768px tapi lebih kecil dari 1000px (tablet atau laptop kecil) */
         @media screen and (min-width: 768px) and (max-width: 1000px){
+            .text-center{
+                row-gap: 16px;
+            }
+
             .container-card {
                 column-gap: 40px;
                 padding: 24px 0;
