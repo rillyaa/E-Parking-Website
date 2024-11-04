@@ -1,14 +1,14 @@
-class checkIn extends HTMLElement {
+class checkOut extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({ mode: 'open' });
         const Swal = require('sweetalert2');
 
-        const checkin = document.createElement('div');
-        checkin.innerHTML = `
+        const checkout = document.createElement('div');
+        checkout.innerHTML = `
         <div class="wrapper">
             <div class="text-center">
-                <h1 class="title">CHECK-IN</h1>
+                <h1 class="title">CHECK-OUT</h1>
                 <h2 class="text-choice">Pilih Kendaraan Anda</h2>
             </div>
 
@@ -110,10 +110,6 @@ class checkIn extends HTMLElement {
 
         /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
         @media screen and (min-width: 576px) and (max-width: 768px){
-            .text-center{
-                row-gap: 12px;
-            }
-
             .container-card {
                 flex-direction: column;
                 row-gap: 12px;
@@ -132,10 +128,6 @@ class checkIn extends HTMLElement {
 
         /* Untuk layar lebih besar dari 768px tapi lebih kecil dari 1000px (tablet atau laptop kecil) */
         @media screen and (min-width: 768px) and (max-width: 1000px){
-            .text-center{
-                row-gap: 16px;
-            }
-
             .container-card {
                 column-gap: 40px;
                 padding: 24px 0;
@@ -152,31 +144,34 @@ class checkIn extends HTMLElement {
         }
     `;
 
-        shadow.appendChild(checkin);
-
+        shadow.appendChild(checkout);
         shadow.appendChild(style); 
         
         const carCard = shadow.querySelector('#car-card button');
-        carCard.addEventListener('click', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Check-In berhasil!',
-                    text: 'Kapasitas parkir mobil yang tersedia: ',
-                    confirmButtonText: 'Tutup'
-                });
+            carCard.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                window.location.hash = '#input-cof';
+      
+                const content = document.getElementById('content');
+                content.innerHTML = '';
+      
+                const inputCofComponent = document.createElement('input-cof');
+                content.appendChild(inputCofComponent);
         });
 
         // Event listener untuk card motor
         const motorCard = shadow.querySelector('#motor-card button');
-        motorCard.addEventListener('click', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Check-In berhasil',
-                    text: 'Kapasitas parkir motor yang tersedia: ',
-                    confirmButtonText: 'Tutup'
-                });
+            motorCard.addEventListener('click', (event) => {
+                event.preventDefault(); 
+                window.location.hash = '#input-cof';
+      
+                const content = document.getElementById('content');
+                content.innerHTML = '';
+      
+                const inputCofComponent = document.createElement('input-cof');
+                content.appendChild(inputCofComponent);
         });
     }
 }
 
-customElements.define('check-in', checkIn);
+customElements.define('check-out', checkOut);
