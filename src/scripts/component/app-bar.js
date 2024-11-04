@@ -11,18 +11,20 @@ class appBar extends HTMLElement {
           </div>
 
           <div class="menu">
-              <button id="menu-toggle"><box-icon name='menu' color='white'></box-icon></button>
+              <button id="menu-toggle">
+                  <box-icon id="menu-icon" name="menu" color="white"></box-icon>
+              </button>
 
               <nav class="navbar">
                   <ul id="menu-list" class="hidden">
-                      <li class="menu-item"><a href="check-out">Check-Out</a></li>
+                      <li class="menu-item"><a href="#check-out">Check-Out</a></li>
                       
                       <!-- Dropdown Menu -->
                       <li class="menu-item dropdown">
                           <a href="#" class="dropdown-toggle">Statistik Parkir</a>
                           <ul class="dropdown-menu hidden">
-                              <li><a href="#stat-car" class="dropdown-item">Mobil</a></li>
-                              <li><a href="#stat-mot" class="dropdown-item">Motor</a></li>
+                              <li><a href="#stat-car" class="dropdown-item" id="dropdown-mobil">Mobil</a></li>
+                              <li><a href="#stat-mot" class="dropdown-item" id="dropdown-motor">Motor</a></li>
                           </ul>
                       </li>
                   </ul>
@@ -155,18 +157,27 @@ class appBar extends HTMLElement {
           window.location.hash = '#';
       });
 
+      //button menu dan close
       const menuButton = shadow.querySelector('#menu-toggle');
+      const menuIcon = shadow.querySelector('#menu-icon');
       const menuList = shadow.querySelector('#menu-list');
-      
+
       menuButton.addEventListener('click', (event) => {
-          event.stopPropagation(); 
+          event.stopPropagation();
           menuList.classList.toggle('hidden');
+
+          // Ganti ikon
+          if (menuIcon.getAttribute('name') === 'menu') {
+              menuIcon.setAttribute('name', 'x');
+          } else {
+              menuIcon.setAttribute('name', 'menu');
+          }
       });
-      
-      // Menutup menu jika klik di luar menu
+
       document.addEventListener('click', (event) => {
           if (!menuList.contains(event.target) && !menuButton.contains(event.target)) {
               menuList.classList.add('hidden');
+              menuIcon.setAttribute('name', 'menu');
           }
       });
 
@@ -182,23 +193,32 @@ class appBar extends HTMLElement {
           dropdownMenu.classList.add('hidden');
       });
 
-      const dropdownMobil = shadow.querySelector('.dropdown-item');
+      //event listener statistik mobil
+      const dropdownMobil = shadow.querySelector('#dropdown-mobil');
+      const dropdownMotor = shadow.querySelector('#dropdown-motor');
 
       dropdownMobil.addEventListener('click', (event) => {
           event.preventDefault(); 
-
-          // Mengubah hash URL
           window.location.hash = '#stat-car';
 
-          // Clear the content area
           const content = document.getElementById('content');
-          content.innerHTML = ''; // Clear previous content
+          content.innerHTML = '';
 
-          // Create and append the stat-car component
           const statCarComponent = document.createElement('stat-car');
           content.appendChild(statCarComponent);
       });
 
+      // event listener statistik motor
+      dropdownMotor.addEventListener('click', (event) => {
+          event.preventDefault(); 
+          window.location.hash = '#stat-mot';
+
+          const content = document.getElementById('content');
+          content.innerHTML = '';
+
+          const statMotComponent = document.createElement('stat-mot');
+          content.appendChild(statMotComponent);
+      });
   }
 }
 

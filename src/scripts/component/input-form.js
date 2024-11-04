@@ -153,7 +153,7 @@ class inputForm extends HTMLElement {
         const guestBookForm = shadow.querySelector('#guest-book-form');
 
         guestBookForm.addEventListener('submit', (event) => {
-            event.preventDefault();  // Mencegah form refresh halaman
+            event.preventDefault(); 
 
         // Redirect ke halaman check-in
         window.location.hash = '#check-in';
