@@ -154,27 +154,29 @@ class checkIn extends HTMLElement {
 
         shadow.appendChild(checkin);
 
-        shadow.appendChild(style); 
-        
+        shadow.appendChild(style);
+
         const carCard = shadow.querySelector('#car-card button');
         carCard.addEventListener('click', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Check-In berhasil!',
-                    text: 'Kapasitas parkir mobil yang tersedia: ',
-                    confirmButtonText: 'Tutup'
-                });
+            Swal.fire({
+                icon: 'success',
+                title: 'Check-In berhasil!',
+                text: 'Kapasitas parkir mobil yang tersedia: ',
+                confirmButtonText: 'Tutup'
+            });
+            window.location.hash = '#input-form';
         });
 
         // Event listener untuk card motor
         const motorCard = shadow.querySelector('#motor-card button');
         motorCard.addEventListener('click', () => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Check-In berhasil',
-                    text: 'Kapasitas parkir motor yang tersedia: ',
-                    confirmButtonText: 'Tutup'
-                });
+            Swal.fire({
+                icon: 'success',
+                title: 'Check-In berhasil',
+                text: 'Kapasitas parkir motor yang tersedia: ',
+                confirmButtonText: 'Tutup'
+            });
+            window.location.hash = '#input-form';
         });
     }
 }
