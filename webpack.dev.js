@@ -16,5 +16,13 @@ module.exports = merge(common, {
       },
     },
     compress: true,
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:5000', // Ganti dengan port backend kamu
+        changeOrigin: true,
+        secure: false,
+      }
+    ]
   },
 });
