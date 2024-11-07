@@ -12,22 +12,57 @@ class statMot extends HTMLElement {
         <div class="capacity-card">
             
             <div id="kapasitas" class="card">
-                <h3 class="text">Total Kapasitas Parkiran</h3>
-                <h2 class="number">100</h2>
+                <div class='card-content'>
+                    <h3 class="text">Total Kapasitas<br>Parkiran</h3>
+                    <h2 class="number">100</h2>
+                </div>
             </div>
             <div id="pengunjung" class="card">
-                <h3 class="text">Total Pengunjung</h3>
-                <h2 class="number">100</h2>
+                <div class='card-content'>
+                    <h3 class="text">Total<br>Pengunjung</h3>
+                    <h2 class="number">100</h2>
+                </div>
             </div>
             <div id="parkiran" class="card">
-                <h3 class="text">Total Parkiran Tersedia</h3>
-                <h2 class="number">100</h2>
+                <div class='card-content'>
+                    <h3 class="text">Total Parkiran<br>Tersedia</h3>
+                    <h2 class="number">100</h2>
+                </div>
             </div>
         </div>
         `;
         
         const style = document.createElement('style')
-        style.textContent = ``;
+        style.textContent = `
+            .text-center{
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 20px;
+            }
+
+            .capacity-card {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .card{
+                width: 60%;
+                margin-left: 20%;
+                background-color: rgba(255,255,255,0.5);
+                border-radius: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+            }
+
+            .card-content{
+                color: white;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+        `;
 
         shadow.appendChild(statmot);
         shadow.appendChild(style);

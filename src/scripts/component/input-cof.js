@@ -7,28 +7,87 @@ class inputCof extends HTMLElement {
         const inputcof = document.createElement('form');
         inputcof.id = "input-checkout-form";
         inputcof.innerHTML = `
-        <div class="wrapper">
             <div class="text-center">
                 <h1 class="title">CHECK-OUT</h1>
-                <h2 class="text-choice">Masukkan Identitas Anda</h2>
+                <h2 class="text-choice">Masukkan Identitas Anda</h2><br>
             </div>
-        </div>
 
-        <div class="container-form">
-            <p>
-                <label for="name">Nama Lengkap</label><br>
-                <input type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" required autocomplete="off">
-            </p>
-            <p><br>
-                <button type="submit" name="submit" value="Submit">Submit</button>
-            </p>
-        </div>
+            <div class="card">
+                <div class="input-form">
+                    <p>
+                    <label for="name">Nama Lengkap</label><br>
+                    <input class="input-box" type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" required autocomplete="off">
+                    </p>
+                    <p><br>
+                        <button type="submit" name="submit" value="Submit">Submit</button>
+                    </p>
+                </div>
+            </div>
         `;
 
         const style = document.createElement('style');
         style.textContent = `
-            .wrapper {
-                text-align: center;
+            *{
+                margin: 0;
+                font-family: 'Poppins';
+                box-sizing: border-box;
+            }
+
+            .text-center{
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 20px;
+            }
+
+            .card{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 40px;
+                margin-left: 20%;
+                line-height: 40px;
+                width: 60%;
+                background-color: rgba(255,255,255,0.5);
+                border-radius: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+                padding: 20px 0;
+            }
+
+            .input-form{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            input::placeholder{
+                padding-left: 10px;
+            }
+
+            input:focus{
+                outline: 4px solid #F9AE22;
+            }
+
+            label{
+                color: black;
+                font-weight: 500;
+            }
+
+            .input-box, button{
+                min-width: 80vh;
+                min-height: 8vh;
+                border-radius: 6px;
+                border: none;
+            }
+
+            button{
+                background-color: #F9AE22;
+                color: black;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
             }
         `;
 

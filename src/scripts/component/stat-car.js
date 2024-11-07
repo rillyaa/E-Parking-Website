@@ -42,26 +42,26 @@ class statCar extends HTMLElement {
                 row-gap: 20px;
             }
 
-    .capacity-card {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+            .capacity-card {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
 
-    .card{
-        width: 60%;
-        margin-left: 20%;
-        background-color: rgba(255,255,255,0.5);
-        border-radius: 20px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-    }
+            .card{
+                width: 60%;
+                margin-left: 20%;
+                background-color: rgba(255,255,255,0.5);
+                border-radius: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+            }
 
-    .card-content{
-        color: white;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
+            .card-content{
+                color: white;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
         `;
 
         shadow.appendChild(statcar);

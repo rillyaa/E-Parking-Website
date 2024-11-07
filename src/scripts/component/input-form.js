@@ -77,8 +77,25 @@ class inputForm extends HTMLElement {
         align-items: center;
     }
 
+    input::placeholder{
+        padding-left: 10px;
+    }
+
+    textarea::placeholder{
+        padding: 10px 10px;
+    }
+
+    input:focus{
+        outline: 4px solid #F9AE22;
+    }
+
+    textarea:focus{
+        outline: 4px solid #F9AE22;
+    }
+
     label {
-        color: white;
+        color: black;
+        font-weight: 500;
     }
 
     .input-box, button{
