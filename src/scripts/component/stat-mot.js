@@ -14,19 +14,19 @@ class statMot extends HTMLElement {
             <div id="kapasitas" class="card">
                 <div class='card-content'>
                     <h3 class="text">Total Kapasitas<br>Parkiran</h3>
-                    <h2 class="number">100</h2>
+                    <h2 class="number" id="totalKapasitas">Loading...</h2>
                 </div>
             </div>
             <div id="pengunjung" class="card">
                 <div class='card-content'>
                     <h3 class="text">Total<br>Pengunjung</h3>
-                    <h2 class="number">100</h2>
+                    <h2 class="number" id="totalPengunjung">Loading...</h2>
                 </div>
             </div>
             <div id="parkiran" class="card">
                 <div class='card-content'>
                     <h3 class="text">Total Parkiran<br>Tersedia</h3>
-                    <h2 class="number">100</h2>
+                    <h2 class="number" id="parkiranTersedia">Loading...</h2>
                 </div>
             </div>
         </div>
@@ -66,6 +66,35 @@ class statMot extends HTMLElement {
 
         shadow.appendChild(statmot);
         shadow.appendChild(style);
+
+        this.fetchData();
+    }
+
+    async fetchData() {
+        try {
+            const response = await fetch('http://localhost:5000/api/kapasitas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ jenis_kendaraan: 'Motor' })
+            });
+
+            const responseData = await response.json();
+            console.log('Response Data:', responseData);
+
+            if (responseData.data){
+                const data = responseData.data;
+
+                // Perbarui elemen dengan data yang diambil
+                const shadow = this.shadowRoot;
+                shadow.querySelector('#totalKapasitas').textContent = data.total_kapasitas;
+                shadow.querySelector('#totalPengunjung').textContent = "Unavailable";
+                shadow.querySelector('#parkiranTersedia').textContent = data.kapasitas_tersedia;
+            }  else {
+                console.error('Data is null or undefined in API response');
+            }
+        } catch (error) {
+            console.error('Error fetching parking data:', error);
+        }
     }
 }
 
