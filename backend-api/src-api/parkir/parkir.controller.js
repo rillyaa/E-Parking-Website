@@ -159,8 +159,8 @@ module.exports = {
                 message: 'Statistik Data Fetched Sucessfully',
                 data: {
                     total_kapasitas: results.total_kapasitas,
-                    kapasitas_pengunjung: results.kapasitas_pengunjung,
-                    total_pengunjung: results.total_pengunjung
+                    total_pengunjung: results.total_pengunjung,
+                    kapasitas_tersedia: results.kapasitas_tersedia,
                 }
             })
         })
