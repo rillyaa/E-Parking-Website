@@ -72,7 +72,7 @@ class statMot extends HTMLElement {
 
     async fetchData() {
         try {
-            const response = await fetch('http://localhost:5000/api/kapasitas', {
+            const response = await fetch('http://localhost:5000/api/statistik', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ jenis_kendaraan: 'Motor' })
@@ -87,7 +87,7 @@ class statMot extends HTMLElement {
                 // Perbarui elemen dengan data yang diambil
                 const shadow = this.shadowRoot;
                 shadow.querySelector('#totalKapasitas').textContent = data.total_kapasitas;
-                shadow.querySelector('#totalPengunjung').textContent = "Unavailable";
+                shadow.querySelector('#totalPengunjung').textContent = data.total_pengunjung;
                 shadow.querySelector('#parkiranTersedia').textContent = data.kapasitas_tersedia;
             }  else {
                 console.error('Data is null or undefined in API response');

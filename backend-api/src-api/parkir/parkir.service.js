@@ -70,9 +70,10 @@ module.exports = {
                 p.kapasitas_tersedia,
                 COUNT(c.id_tamu) AS total_pengunjung
             FROM parkir p
-            LEFT JOIN checkin c ON c.jenis_kendaraan = p.jenis_kendaraan AND c.waktu_checkout IS NULL
-            WHERE jenis_kendaraan = ?
-            GROUP BY p.jenis_kendaraan`,
+            LEFT JOIN tamu t ON t.jenis_kendaraan = p.jenis_kendaraan
+            LEFT JOIN checkin c ON c.id_tamu = t.id_tamu AND c.waktu_checkout IS NULL
+            WHERE p.jenis_kendaraan = ?
+            GROUP BY p.total_kapasitas, p.kapasitas_tersedia`,
             [jenis_kendaraan],
             (error, results) => {
                 if(error) {
