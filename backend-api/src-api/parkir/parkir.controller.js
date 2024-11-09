@@ -57,7 +57,7 @@
 
 // module.exports = { getAllParkir, getParkirById, createParkir, updateParkir, deleteParkir };
 
-const { getAllParkir, createparkir, getParkirById , getKapasitasByType} = require('./parkir.service');
+const { getAllParkir, createparkir, getParkirById , getKapasitasByType, getStatistikByType } = require('./parkir.service');
 
 module.exports = {
     getAllParkir: (req, res) => {
@@ -133,6 +133,35 @@ module.exports = {
                 error: false, 
                 message: 'Kapasitas Data Fetched Sucessfully',
                 data: results
+            })
+        })
+    },
+
+    getStatistikByType: (req, res) => {
+        const {jenis_kendaraan} = req.body;
+        console.log('API Menerima Permintaan untuk Jenis Kendaraan:', jenis_kendaraan);
+        getStatistikByType(jenis_kendaraan, (err, results) => {
+            if(err){
+                console.error('Error Getting Statistik Data: ', err);
+                return res.status(500).json({
+                    error: true,
+                    message: 'Failed to fetch Statistik Data'
+                });
+            }
+            if(!results){
+                return res.status(400).json({
+                    error: true,
+                    message: 'Data Statistik not Found!'
+                })
+            }
+            return res.status(200).json({
+                error: false, 
+                message: 'Statistik Data Fetched Sucessfully',
+                data: {
+                    total_kapasitas: results.total_kapasitas,
+                    kapasitas_pengunjung: results.kapasitas_pengunjung,
+                    total_pengunjung: results.total_pengunjung
+                }
             })
         })
     }

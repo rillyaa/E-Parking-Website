@@ -61,6 +61,29 @@ module.exports = {
                 return callback(null, results[0]);
             }
         )
+    },
+
+    getStatistikByType: (jenis_kendaraan, callback) => {
+        pool.query(
+            `SELECT 
+                p.total_kapasitas,
+                p.kapasitas_tersedia,
+                COUNT(c.id_tamu) AS total_pengunjung
+            FROM parkir p
+            LEFT JOIN checkin c ON c.jenis_kendaraan = p.jenis_kendaraan AND c.waktu_checkout IS NULL
+            WHERE jenis_kendaraan = ?
+            GROUP BY p.jenis_kendaraan`,
+            [jenis_kendaraan],
+            (error, results) => {
+                if(error) {
+                    return callback(error);
+                }
+                if(results.length === 0){
+                    return callback(null, null);
+                }
+                return callback(null, results[0]);
+            }
+        )
     }
 }
 
