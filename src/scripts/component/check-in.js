@@ -1,3 +1,5 @@
+const { text } = require('body-parser');
+
 class checkIn extends HTMLElement {
     constructor() {
         super();
@@ -153,30 +155,110 @@ class checkIn extends HTMLElement {
     `;
 
         shadow.appendChild(checkin);
-
         shadow.appendChild(style);
 
         const carCard = shadow.querySelector('#car-card button');
-        carCard.addEventListener('click', () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Check-In berhasil!',
-                text: 'Kapasitas parkir mobil yang tersedia: ',
-                confirmButtonText: 'Tutup'
-            });
-            window.location.hash = '#input-form';
+        carCard.addEventListener('click', async() => {
+            const tamuData = JSON.parse(localStorage.getItem('tamuData'));
+            tamuData.jenis_kendaraan = 'Mobil';
+
+            try {
+                // First, call createTamu to perform the check-in
+                const response = await fetch('http://localhost:5000/api/createTamu', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(tamuData),
+                });
+
+                const result = await response.json();
+
+                if (result && !result.error) {
+                    const kapasitasResponse = await fetch('http://localhost:5000/api/kapasitas', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ jenis_kendaraan: 'Mobil' }),
+                    });
+
+                    const kapasitasData = await kapasitasResponse.json();
+                    console.log("Updated kapasitasData: ", kapasitasData);
+
+                    if (kapasitasData && kapasitasData.data && kapasitasData.data.kapasitas_tersedia !== undefined) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Check-In berhasil!',
+                            text: `Kapasitas parkir mobil yang terbaru tersedia: ${kapasitasData.data.kapasitas_tersedia}`,
+                            confirmButtonText: 'Tutup'
+                        });
+                        window.location.hash = '#input-form';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Data kapasitas tidak ditemukan setelah Check-In!',
+                        });
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Check-In',
+                        text: result.message,
+                    });
+                }
+            } catch (error) {
+                console.error('Error during Check-In: ', error);
+            }
         });
 
-        // Event listener untuk card motor
+
         const motorCard = shadow.querySelector('#motor-card button');
-        motorCard.addEventListener('click', () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Check-In berhasil',
-                text: 'Kapasitas parkir motor yang tersedia: ',
-                confirmButtonText: 'Tutup'
-            });
-            window.location.hash = '#input-form';
+        motorCard.addEventListener('click', async () => {
+            const tamuData = JSON.parse(localStorage.getItem('tamuData'));
+            tamuData.jenis_kendaraan = 'Motor';  // Menambahkan jenis kendaraan
+
+            try {
+                const response = await fetch('http://localhost:5000/api/createTamu', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(tamuData),
+                });
+
+                const result = await response.json();
+
+                if (result && !result.error) {
+                    const kapasitasResponse = await fetch('http://localhost:5000/api/kapasitas', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ jenis_kendaraan: 'Motor' }),
+                    });
+
+                    const kapasitasData = await kapasitasResponse.json();
+                    console.log("Updated kapasitasData: ", kapasitasData);
+
+                    if (kapasitasData && kapasitasData.data && kapasitasData.data.kapasitas_tersedia !== undefined) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Check-In berhasil!',
+                            text: `Kapasitas parkir Motor yang terbaru tersedia: ${kapasitasData.data.kapasitas_tersedia}`,
+                            confirmButtonText: 'Tutup'
+                        });
+                        window.location.hash = '#input-form';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Data kapasitas tidak ditemukan setelah Check-In!',
+                        });
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Check-In',
+                        text: result.message,
+                    });
+                }
+            } catch (error) {
+                console.error('Error during Check-In: ', error);
+            }
         });
     }
 }

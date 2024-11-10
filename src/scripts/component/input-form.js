@@ -169,12 +169,20 @@ class inputForm extends HTMLElement {
         // Tangkap elemen form dan tambahkan event listener submit
         const guestBookForm = shadow.querySelector('#guest-book-form');
 
-        guestBookForm.addEventListener('submit', (event) => {
+        guestBookForm.addEventListener('submit', async (event) => {
             event.preventDefault(); 
 
-        // Redirect ke halaman check-in
-        window.location.hash = '#check-in';
-    });
+            const tamuData = {
+                nama: shadow.getElementById('name').value,
+                alamat: shadow.getElementById('address').value,
+                keperluan: shadow.getElementById('reason').value,
+                no_telp: shadow.getElementById('phone').value,
+                jenis_kendaraan: '',
+            };
+
+            localStorage.setItem('tamuData', JSON.stringify(tamuData));
+            window.location.hash = '#check-in';
+        });
     }
 }
 

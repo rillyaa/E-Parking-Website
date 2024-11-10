@@ -1,6 +1,10 @@
-// src-api/parkir/parkir.router.js
-
-const { getAllParkir, createparkir, getParkirById , getKapasitasByType, getStatistikByType } = require('./parkir.controller');
+const { 
+    getAllParkir, 
+    createparkir, 
+    getParkirById, 
+    getKapasitasByType, 
+    getStatistikByType, 
+} = require('./parkir.controller');
 
 const router = require('express').Router();
 
@@ -11,15 +15,3 @@ router.post('/addparkir', createparkir);
 router.post('/statistik', getStatistikByType)
 
 module.exports = router;
-
-// const express = require('express');
-// const router = express.Router();
-// const ParkirController = require('./parkir.controller');
-
-// router.get('/', ParkirController.getAllParkir);
-// router.get('/:id', ParkirController.getParkirById);
-// router.post('/addparkir', ParkirController.createParkir);
-// router.put('/:id', ParkirController.updateParkir);
-// router.delete('/:id', ParkirController.deleteParkir);
-
-// module.exports = router;
