@@ -1,63 +1,10 @@
-// // src-api/parkir/parkir.controller.js
-
-// const ParkirService = require('./parkir.service');
-
-// const getAllParkir = async (req, res) => {
-//     try {
-//         const data = await ParkirService.getAllParkir();
-//         res.status(200).json(data);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-// const getParkirById = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const data = await ParkirService.getParkirById(id);
-//         if (!data) return res.status(404).json({ message: "Parkir not found" });
-//         res.status(200).json(data);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-// const createParkir = async (req, res) => {
-//     try {
-//         const { jenis_kendaraan, total_kapasitas, kapasitas_tersedia } = req.body;
-//         const data = await ParkirService.createParkir(jenis_kendaraan, total_kapasitas, kapasitas_tersedia);
-//         res.status(201).json(data);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-// const updateParkir = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { jenis_kendaraan, total_kapasitas, kapasitas_tersedia } = req.body;
-//         const data = await ParkirService.updateParkir(id, jenis_kendaraan, total_kapasitas, kapasitas_tersedia);
-//         if (!data) return res.status(404).json({ message: "Parkir not found" });
-//         res.status(200).json(data);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-// const deleteParkir = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const success = await ParkirService.deleteParkir(id);
-//         if (!success) return res.status(404).json({ message: "Parkir not found" });
-//         res.status(200).json({ message: "Parkir deleted successfully" });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
-
-// module.exports = { getAllParkir, getParkirById, createParkir, updateParkir, deleteParkir };
-
-const { getAllParkir, createparkir, getParkirById , getKapasitasByType, getStatistikByType } = require('./parkir.service');
+const { 
+    getAllParkir, 
+    createparkir, 
+    getParkirById , 
+    getKapasitasByType, 
+    getStatistikByType 
+} = require('./parkir.service');
 
 module.exports = {
     getAllParkir: (req, res) => {

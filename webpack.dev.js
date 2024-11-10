@@ -25,4 +25,14 @@ module.exports = merge(common, {
       }
     ]
   },
+  resolve: {
+    fallback: {
+      "querystring": require.resolve("querystring-es3"),
+      "stream": require.resolve("stream-browserify"),
+      "path": require.resolve("path-browserify"),
+      "fs": false, // fs tidak diperlukan di frontend, set false jika tidak digunakan
+      "zlib": false,
+      "async_hooks": false,
+    }
+  }
 });

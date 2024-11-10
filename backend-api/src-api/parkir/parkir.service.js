@@ -1,5 +1,3 @@
-// src-api/parkir/parkir.service.js
-
 const pool = require('../../config/database');
 
 module.exports = {
@@ -87,36 +85,3 @@ module.exports = {
         )
     }
 }
-
-// const getAllParkir = async () => {
-//     const [rows] = await pool.query(`SELECT * FROM parkir`);
-//     return rows;
-// };
-
-// const getParkirById = async (id) => {
-//     const [rows] = await pool.query(`SELECT * FROM parkir WHERE id_parkir = ?`, [id]);
-//     return rows[0];
-// };
-
-// const createParkir = async (jenis_kendaraan, total_kapasitas, kapasitas_tersedia) => {
-//     const [result] = await pool.query(
-//         `INSERT INTO parkir (jenis_kendaraan, total_kapasitas, kapasitas_tersedia) VALUES (?, ?, ?)`,
-//         [jenis_kendaraan, total_kapasitas, kapasitas_tersedia]
-//     );
-//     return { id: result.insertId, jenis_kendaraan, total_kapasitas, kapasitas_tersedia };
-// };
-
-// const updateParkir = async (id, jenis_kendaraan, total_kapasitas, kapasitas_tersedia) => {
-//     const [result] = await pool.query(
-//         `UPDATE parkir SET jenis_kendaraan = ?, total_kapasitas = ?, kapasitas_tersedia = ? WHERE id_parkir = ?`,
-//         [jenis_kendaraan, total_kapasitas, kapasitas_tersedia, id]
-//     );
-//     return result.affectedRows > 0;
-// };
-
-// const deleteParkir = async (id) => {
-//     const [result] = await pool.query(`DELETE FROM parkir WHERE id_parkir = ?`, [id]);
-//     return result.affectedRows > 0;
-// };
-
-// module.exports = { getAllParkir, getParkirById, createParkir, updateParkir, deleteParkir };
