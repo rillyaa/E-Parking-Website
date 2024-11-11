@@ -27,6 +27,13 @@ class appBar extends HTMLElement {
                               <li><a href="#stat-mot" class="dropdown-item" id="dropdown-motor">Motor</a></li>
                           </ul>
                       </li>
+                      <li class="menu-item dropdown">
+                          <a href="#" class="dropdown-toggle">Data Pengunjung</a>
+                          <ul class="dropdown-menu hidden">
+                              <li><a href="#visit-car" class="dropdown-item" id="pengunjung-mobil">Data Pengunjung Mobil</a></li>
+                              <li><a href="#visit-mot" class="dropdown-item" id="pengunjung-motor">Data Pengunjung Motor</a></li>
+                          </ul>
+                      </li>
                   </ul>
               </nav>
           </div>
@@ -36,6 +43,7 @@ class appBar extends HTMLElement {
       style.textContent = `
           * {
               margin: 0;
+              padding: 0;
               font-family: 'Poppins';
               text-decoration: none;
               list-style: none;
@@ -45,7 +53,9 @@ class appBar extends HTMLElement {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 15px 20px;
             min-height: 15vh;
+            position: fixed;
           }
 
           nav .logo {
@@ -54,7 +64,7 @@ class appBar extends HTMLElement {
             justify-content: center;
             align-items: center;
             column-gap: 10px;
-            }
+        }
             
           nav .logo img {
             height: 76px;
@@ -70,6 +80,12 @@ class appBar extends HTMLElement {
               cursor: pointer;
               border: none;
               background-color: transparent;
+              display: grid;
+              justify-content: flex-end;
+              algn-items: center;
+              flex-grow: 1;
+              font-size: 24px;
+            //   position: relative;
           }
           
           .menu button i {
@@ -91,7 +107,7 @@ class appBar extends HTMLElement {
 
           .menu-list {
               display: flex;
-              flex-direction: column; /* Mengatur menu utama secara vertikal */
+              flex-direction: column;
               padding: 0;
           }
 
@@ -107,18 +123,25 @@ class appBar extends HTMLElement {
           }
 
           .dropdown-menu {
-              display: none; /* Sembunyikan dropdown secara default */
+              display: none;
               position: absolute;
-              top: 100%; /* Tempatkan di bawah item utama */
+              top: 100%;
               left: 0;
               background-color: #333;
               padding: 10px 0;
               list-style-type: none;
               width: 100%;
+              z-index: 1000;
           }
 
           .menu-item.dropdown:hover .dropdown-menu {
-              display: block; /* Tampilkan dropdown saat menu utama di-hover */
+              display: block;
+              pointer-events: auto;
+          }
+
+          .menu-item.dropdown:hover{
+            margin-bottom: 108px;
+            transform: none;
           }
 
           .dropdown-item {
@@ -129,7 +152,7 @@ class appBar extends HTMLElement {
           }
 
           .dropdown-item:hover {
-              background-color: #444; /* Warna latar belakang saat di-hover */
+              background-color: #444;
           }
 
           /* Untuk layar lebih kecil dari 576px (ponsel) */
