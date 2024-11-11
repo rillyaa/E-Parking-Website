@@ -42,6 +42,10 @@ class statMot extends HTMLElement {
                 row-gap: 20px;
             }
 
+        .text-center > h2 {
+            font-size: 36px;
+        }
+
             .capacity-card {
                 display: flex;
                 flex-direction: column;
@@ -49,8 +53,8 @@ class statMot extends HTMLElement {
             }
 
             .card{
-                width: 60%;
-                margin-left: 20%;
+                width: 50%;
+                margin-left: 25%;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
@@ -59,7 +63,8 @@ class statMot extends HTMLElement {
             .card-content{
                 color: white;
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-between;
+                padding: 0 52px;
                 align-items: center;
             }
         `;

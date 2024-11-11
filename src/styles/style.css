@@ -5,14 +5,6 @@
     list-style: none;
 }
 
-h1 {
-    font-size: 58px;
-}
-
-h2 {
-    font-size: 40px;
-}
-
 body {
     background-image: url("../public/img/bg.png");
     background-position: center;

@@ -42,126 +42,134 @@ class inputForm extends HTMLElement {
 
         const style = document.createElement('style')
         style.textContent = `
-    *{
-        margin: 0;
-        font-family: 'Poppins';
-        box-sizing: border-box;
-    }
+            *{
+                margin: 0;
+                font-family: 'Poppins';
+                box-sizing: border-box;
+            }
 
-    .text-center{
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        row-gap: 20px;
-    }
-
-    .card{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 40px;
-        margin-left: 20%;
-        line-height: 40px;
-        width: 60%;
-        background-color: rgba(255,255,255,0.5);
-        border-radius: 20px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-        padding: 20px 0;
-    }
-
-    .input-form{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    input::placeholder{
-        padding-left: 10px;
-    }
-
-    textarea::placeholder{
-        padding: 10px 10px;
-    }
-
-    input:focus{
-        outline: 4px solid #F9AE22;
-    }
-
-    textarea:focus{
-        outline: 4px solid #F9AE22;
-    }
-
-    label {
-        color: black;
-        font-weight: 500;
-    }
-
-    .input-box, button{
-        min-width: 80vh;
-        min-height: 8vh;
-        border-radius: 6px;
-        border: none;
-    }
-
-    button{
-        background-color: #F9AE22;
-        color: black;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-        /* Untuk layar lebih kecil dari 576px (ponsel) */
-        @media screen and (max-width: 576px){
             .text-center{
-                row-gap: 4px;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                row-gap: 20px;
             }
 
-            .card {
-                margin-left: 8%;
-                width: 80%;
+            .text-center > h2 {
+                font-size: 36px;
             }
 
-            .input-box, button{
-                min-width: 48vh;
-                background-color: blue;
-            }
-        }
-
-        /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
-        @media screen and (min-width: 576px) and (max-width: 768px) {
-            .text-center{
-                row-gap: 12px;
+            .text-center > h1 {
+                font-size: 44px;
             }
 
             .card{
-                margin-left: 12%;
-                width: 80%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 40px;
+                margin-left: 20%;
+                margin-bottom: 80px;
+                line-height: 40px;
+                width: 60%;
+                background-color: rgba(255,255,255,0.5);
+                border-radius: 20px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+                padding: 40px 0;
+            }
+
+            .input-form{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            input:focus{
+                outline: 4px solid #F9AE22;
+            }
+
+            textarea:focus{
+                outline: 4px solid #F9AE22;
+            }
+
+            label {
+                color: black;
+                font-weight: 500;
+            }
+
+            .input-box{
+                padding: 0 20px;
+            }
+
+            textarea.input-box{
+                padding-top: 20px;
             }
 
             .input-box, button{
-                min-width: 60vh;
-            }
-        }
-
-        /* Untuk layar lebih besar dari 768px tapi lebih kecil dari 1000px (tablet atau laptop kecil) */
-        @media screen and (min-width: 768px) and (max-width: 1000px){
-            .text-center{
-                row-gap: 16px;
+                min-width: 92vh;
+                min-height: 8vh;
+                border-radius: 6px;
+                border: none;
             }
 
-            .card {
-                margin-left: 10%;
-                width: 80%;
+            button{
+                background-color: #F9AE22;
+                color: black;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
             }
 
-            .input-box, button{
-                min-width: 72vh;
+            /* Untuk layar lebih kecil dari 576px (ponsel) */
+            @media screen and (max-width: 576px){
+                .text-center{
+                    row-gap: 4px;
+                }
+
+                .card {
+                    margin-left: 8%;
+                    width: 80%;
+                }
+
+                .input-box, button{
+                    min-width: 48vh;
+                }
             }
-        }
-    `;
+
+            /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
+            @media screen and (min-width: 576px) and (max-width: 768px) {
+                .text-center{
+                    row-gap: 12px;
+                }
+
+                .card{
+                    margin-left: 12%;
+                    width: 80%;
+                }
+
+                .input-box, button{
+                    min-width: 80vh;
+                }
+            }
+
+            /* Untuk layar lebih besar dari 768px tapi lebih kecil dari 1000px (tablet atau laptop kecil) */
+            @media screen and (min-width: 768px) and (max-width: 1000px){
+                .text-center{
+                    row-gap: 16px;
+                }
+
+                .card {
+                    margin-left: 10%;
+                    width: 80%;
+                }
+
+                .input-box, button{
+                    min-width: 72vh;
+                }
+            }
+        `;
 
         shadow.appendChild(form);
         shadow.appendChild(style);

@@ -48,6 +48,14 @@ class checkIn extends HTMLElement {
             row-gap: 20px;
         }
 
+        .text-center > h2 {
+            font-size: 36px;
+        }
+
+        .text-center > h1 {
+            font-size: 44px;
+        }
+
         .container-card{
             padding: 10px;
             display: flex;

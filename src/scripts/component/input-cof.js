@@ -41,18 +41,27 @@ class inputCof extends HTMLElement {
                 row-gap: 20px;
             }
 
+            .text-center > h2 {
+                font-size: 36px;
+            }
+
+            .text-center > h1 {
+                font-size: 44px;
+            }
+
             .card{
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: 40px;
+                margin-top: 20px;
                 margin-left: 20%;
-                line-height: 40px;
+                margin-bottom: 80px;
+                // line-height: 40px;
                 width: 60%;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-                padding: 20px 0;
+                padding: 40px 0;
             }
 
             .input-form{
@@ -62,10 +71,6 @@ class inputCof extends HTMLElement {
                 align-items: center;
             }
 
-            input::placeholder{
-                padding-left: 10px;
-            }
-
             input:focus{
                 outline: 4px solid #F9AE22;
             }
@@ -73,10 +78,15 @@ class inputCof extends HTMLElement {
             label{
                 color: black;
                 font-weight: 500;
+                line-height: 32px;
+            }
+
+            .input-box{
+                padding: 0 20px;
             }
 
             .input-box, button{
-                min-width: 80vh;
+                min-width: 92vh;
                 min-height: 8vh;
                 border-radius: 6px;
                 border: none;
