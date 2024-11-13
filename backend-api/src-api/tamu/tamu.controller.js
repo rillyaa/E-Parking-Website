@@ -4,6 +4,7 @@ const {
     deleteTamu, 
     checkoutTamu, 
     getTamubyName, 
+    getTamubyType
 } = require('./tamu.service');
 
 module.exports = {
@@ -92,6 +93,24 @@ module.exports = {
             }
             return res.status(200).json({
                 error: false,
+                message: 'Data Tamu Fetched Successfully',
+                DataTamu: results
+            });
+        });
+    }, 
+
+    getTamubyType: (req, res) => {
+        const data = req.body;
+        getTamubyType(data, (error, results) => {
+            if(error){
+                console.error('Error mencari Data Pengunjung: ',error);
+                return res.status(200).json({
+                    error: true,
+                    message: 'Failed Fetch Data Tamu'
+                });
+            }
+            return res.status(200).json({
+                error: false, 
                 message: 'Data Tamu Fetched Successfully',
                 DataTamu: results
             });

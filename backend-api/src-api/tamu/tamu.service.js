@@ -126,22 +126,62 @@ module.exports = {
         );
     },
 
+    // checkoutTamu: (data, callback) => {
+    //     pool.query(
+    //         `SELECT checkin.id_tamu, tamu.jenis_kendaraan FROM checkin
+    //         JOIN tamu ON checkin.id_tamu = tamu.id_tamu
+    //         WHERE tamu.nama = ? AND checkin.waktu_checkout IS NULL`,
+    //         [data.nama],
+    //         (error, results) => {
+    //             if(error){
+    //                 return callback(error);
+    //             }
+    //             if(results.length === 0){
+    //                 return callback(null, { message: 'Tidak ada data tamu dengan nama tersebut atau tamu sudah checkout.' });
+    //             }
+
+    //             const {id_tamu, jenis_kendaraan} = results[0];
+
+    //             pool.query(
+    //                 `UPDATE checkin SET waktu_checkout = CURRENT_TIMESTAMP WHERE id_tamu = ?`,
+    //                 [id_tamu],
+    //                 (error, results) => {
+    //                     if(error){
+    //                         return callback(error);
+    //                     }
+
+    //                     pool.query(
+    //                         `UPDATE parkir SET kapasitas_tersedia = kapasitas_tersedia + 1 WHERE jenis_kendaraan = ?`,
+    //                         [jenis_kendaraan],
+    //                         (error, results) => {
+    //                             if(error){
+    //                                 return callback(error);
+    //                             }
+    //                             return callback(null, { message: 'Tamu Berhasil Checkout dan Data parkir diperbarui' })
+    //                         }
+    //                     );
+    //                 }
+    //             );
+    //         }
+    //     );
+    // },
+
     checkoutTamu: (data, callback) => {
         pool.query(
             `SELECT checkin.id_tamu, tamu.jenis_kendaraan FROM checkin
             JOIN tamu ON checkin.id_tamu = tamu.id_tamu
-            WHERE tamu.nama = ? AND checkin.waktu_checkout IS NULL`,
-            [data.nama],
+            WHERE tamu.nama = ? AND tamu.jenis_kendaraan = ? AND checkin.waktu_checkout IS NULL`,
+            [data.nama, data.jenis_kendaraan],
             (error, results) => {
                 if(error){
                     return callback(error);
                 }
                 if(results.length === 0){
-                    return callback(null, { message: 'Tidak ada data tamu dengan nama tersebut atau tamu sudah checkout.' });
+                    return callback(null, { message: 'Tidak ada data tamu dengan nama dan jenis kendaraan tersebut atau tamu sudah checkout.' });
                 }
-
+    
                 const {id_tamu, jenis_kendaraan} = results[0];
-
+    
                 pool.query(
                     `UPDATE checkin SET waktu_checkout = CURRENT_TIMESTAMP WHERE id_tamu = ?`,
                     [id_tamu],
@@ -149,7 +189,7 @@ module.exports = {
                         if(error){
                             return callback(error);
                         }
-
+    
                         pool.query(
                             `UPDATE parkir SET kapasitas_tersedia = kapasitas_tersedia + 1 WHERE jenis_kendaraan = ?`,
                             [jenis_kendaraan],
@@ -180,6 +220,21 @@ module.exports = {
                 return callback(null, results);
             }
         )
+    }, 
 
+    getTamubyType: (data, callback) => {
+        pool.query(
+            `SELECT * FROM tamu WHERE jenis_kendaraan = ?`,
+            [data.jenis_kendaraan],
+            (error, results) => {
+                if(error){
+                    return callback(error);
+                }
+                if(results.length === 0){
+                    return callback(null, {message: 'Tidak Ditemukan Tamu dengan Jenis Kendaraan Tersebut'})
+                }
+                return callback(null, results);
+            }
+        )
     }
 }
