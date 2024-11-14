@@ -7,6 +7,12 @@ const loadContent = () => {
     const content = document.getElementById('content');
     
     switch (hash) {
+        case '#guest-car':
+            content.innerHTML = '<guest-car></guest-car>';
+            break;
+            case '#guest-mot':
+            content.innerHTML = '<guest-mot></guest-mot>';
+            break;
         case '#guest-data':
             content.innerHTML = '<guest-data></guest-data>';
             break;
