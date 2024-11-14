@@ -15,7 +15,7 @@ class appBar extends HTMLElement {
                   <box-icon id="menu-icon" name="menu" color="white"></box-icon>
               </button>
 
-              <nav class="navbar">
+              <div class="navbar">
                   <ul id="menu-list" class="hidden">
                       <li class="menu-item"><a href="#check-out">Check-Out</a></li>
                       
@@ -30,145 +30,159 @@ class appBar extends HTMLElement {
                       <li class="menu-item dropdown">
                           <a href="#" class="dropdown-toggle">Data Pengunjung</a>
                           <ul class="dropdown-menu hidden">
-                              <li><a href="#visit-car" class="dropdown-item" id="pengunjung-mobil">Data Pengunjung Mobil</a></li>
-                              <li><a href="#visit-mot" class="dropdown-item" id="pengunjung-motor">Data Pengunjung Motor</a></li>
+                              <li><a href="#visit-car" class="dropdown-item" id="pengunjung-mobil">Pengunjung Mobil</a></li>
+                              <li><a href="#visit-mot" class="dropdown-item" id="pengunjung-motor">Pengunjung Motor</a></li>
                           </ul>
                       </li>
                   </ul>
-              </nav>
+              </div>
           </div>
       `;
 
       const style = document.createElement('style');
       style.textContent = `
-          * {
-              margin: 0;
-              padding: 0;
-              font-family: 'Poppins';
-              text-decoration: none;
-              list-style: none;
-          }
+          /* Base Styles */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    width: 100%;
+    // background-color: #333;
+}
 
-          nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            min-height: 15vh;
-            position: fixed;
-          }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-          nav .logo {
-            padding: 0 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            column-gap: 10px;
-        }
-            
-          nav .logo img {
-            height: 76px;
-            cursor: pointer;
-          }
+.logo img {
+    height: 76px;
+    cursor: pointer;
+}
 
-          .hidden {
-            display: none;
-          }
+/* Menu Container */
+.menu {
+    margin-right: 70px;
+    position: relative;
+    z-index: 1;
+}
 
-          .menu button {
-              color: white;
-              cursor: pointer;
-              border: none;
-              background-color: transparent;
-              display: grid;
-              justify-content: flex-end;
-              algn-items: center;
-              flex-grow: 1;
-              font-size: 24px;
-            //   position: relative;
-          }
-          
-          .menu button i {
-            font-size: 24px;
-          }
+/* Horizontal Menu for Desktop */
+.navbar ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
 
-          .menu ul {
-            list-style: none;
-          }
+/* Menu Items */
+.menu-item {
+    position: relative;
+}
 
-          .menu ul li {          
-            margin-right: 20px;
-          }
+.menu-item a {
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+}
 
-          .menu ul li a {
-            color: white;
-            font-size: 18px;
-          }
 
-          .menu-list {
-              display: flex;
-              flex-direction: column;
-              padding: 0;
-          }
+/* More Specific - Overrides the above */
+nav .dropdown-menu {
+    display: none; 
+} 
 
-          .menu-item {
-              position: relative;
-              margin-bottom: 10px;
-          }
+/* Initially hide the dropdown menu */
+.dropdown-menu {
+    display: none;  /* This will make it hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    padding: 10px 0;
+    list-style: none;
+    min-width: 150px;
+    z-index: 1000;
+    border-radius: 15px;
+}
 
-          .menu-item a {
-              color: white;
-              font-size: 18px;
-              text-decoration: none;
-          }
+/* Show the dropdown on hover */
+.menu-item.dropdown:hover .dropdown-menu,
+.menu-item.dropdown.active .dropdown-menu {
+    display: block; /* This will display the dropdown when hovered or clicked */
+}
 
-          .dropdown-menu {
-              display: none;
-              position: absolute;
-              top: 100%;
-              left: 0;
-              background-color: #333;
-              padding: 10px 0;
-              list-style-type: none;
-              width: 100%;
-              z-index: 1000;
-          }
 
-          .menu-item.dropdown:hover .dropdown-menu {
-              display: block;
-              pointer-events: auto;
-          }
+.dropdown-menu .dropdown-item {
+    padding: 8px 20px;
+    color: white;
+    white-space: nowrap; /* Prevent text wrapping */
+}
 
-          .menu-item.dropdown:hover{
-            margin-bottom: 108px;
-            transform: none;
-          }
+.dropdown-item {
+    padding: 8px 20px;
+    color: white;
+}
 
-          .dropdown-item {
-              padding: 8px 20px;
-              color: white;
-              text-decoration: none;
-              display: block;
-          }
+.dropdown-item:hover {
+    background-color: #444;
+}
 
-          .dropdown-item:hover {
-              background-color: #444;
-          }
+/* Mobile Menu Button */
+#menu-toggle {
+    display: none;
+}
 
-          /* Untuk layar lebih kecil dari 576px (ponsel) */
-          @media screen and (max-width: 576px){
-            nav .logo img {
-              height: 40px;
-            }
-              
-          }
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    /* Show the menu button on mobile */
+    #menu-toggle {
+        display: block;
+        font-size: 24px;
+        color: white;
+        background: none;
+        border: none;
+    }
 
-          /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
-          @media screen and (min-width: 576px) and (max-width: 768px){
-            nav .logo img {
-              height: 60px;
-            }
-          }
+    /* Hide the horizontal menu by default */
+    .menu ul {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    /* Show the menu vertically when toggled */
+    .menu ul.visible {
+        display: flex;
+    }
+}
+
+/* Ensure menu items are clickable and have good spacing */
+.menu-item a {
+    padding: 5px 10px;
+}
+
+.menu-item a:hover {
+    background-color: #444;
+    border-radius: 15px;
+}
+
+/* Dropdown menu items spacing and hover effect */
+.dropdown-menu .dropdown-item {
+    padding: 10px 20px;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #444;
+    border-radius: 12px;
+}
       `;
 
       shadow.appendChild(nav);
@@ -205,16 +219,28 @@ class appBar extends HTMLElement {
       });
 
       // Dropdown toggle on hover
-      const dropdown = shadow.querySelector('.dropdown');
-      dropdown.addEventListener('mouseenter', () => {
-          const dropdownMenu = shadow.querySelector('.dropdown-menu');
-          dropdownMenu.classList.remove('hidden');
-      });
+      // Dropdown toggle on hover and click
+// Dropdown toggle on hover (use CSS for hover instead of JS)
+const dropdown = shadow.querySelector('.dropdown');
+const dropdownMenu = shadow.querySelector('.dropdown-menu');
 
-      dropdown.addEventListener('mouseleave', () => {
-          const dropdownMenu = shadow.querySelector('.dropdown-menu');
-          dropdownMenu.classList.add('hidden');
-      });
+// Hover functionality (CSS will handle this, no need for JS)
+dropdown.addEventListener('mouseenter', () => {
+    dropdownMenu.classList.remove('hidden'); // Show dropdown
+});
+
+dropdown.addEventListener('mouseleave', () => {
+    dropdownMenu.classList.add('hidden'); // Hide dropdown
+});
+
+// Click functionality (toggle visibility)
+dropdown.addEventListener('click', (event) => {
+    event.stopPropagation(); // Prevents the click from propagating to document
+    dropdownMenu.classList.toggle('hidden'); // Toggle visibility
+    dropdown.classList.toggle('active'); // Optional, for styling when clicked
+});
+
+
 
       //event listener statistik mobil
       const dropdownMobil = shadow.querySelector('#dropdown-mobil');

@@ -49,6 +49,7 @@ class inputForm extends HTMLElement {
             }
 
             .text-center{
+                margin-top: 50px;
                 color: white;
                 display: flex;
                 flex-direction: column;
