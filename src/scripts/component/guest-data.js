@@ -64,7 +64,6 @@ class guestData extends HTMLElement {
       }
 
       .table-guest {
-          // margin-top: 20px;
           overflow-x: auto;
       }
 
@@ -123,29 +122,46 @@ class guestData extends HTMLElement {
       this.shadowRoot.appendChild(style);
     }
   
-    // async fetchData() {
-    //   try {
-    //     const response = await fetch('http://localhost:5000/api/dataTamu');
-    //     const guests = await response.json();
-    //     this.renderTable(guests);
-    //   } catch (error) {
-    //     console.error('Failed to fetch guest data:', error.message);
-    //     this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error loading data.</p>`;
-    //   }
-    // }
+    async fetchData() {
+      try {
+        const tamuResponse = await fetch('http://localhost:5000/api/tamu', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const tamuData = await tamuResponse.json();
+        
+        // Akses langsung array listTamu di dalam objek tamuData
+        if (Array.isArray(tamuData.listTamu)) {
+          this.renderTable(tamuData.listTamu);
+        } else {
+          console.error('Expected an array but received:', tamuData);
+          this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error: Data is not an array.</p>`;
+        }
+      } catch (error) {
+        console.error('Failed to fetch guest data:', error.message);
+        this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error loading data.</p>`;
+      }
+    }
   
     renderTable(data) {
       const tbody = this.shadowRoot.querySelector('#guest-rows');
       tbody.innerHTML = '';
-  
-      data.forEach((guest, index) => {
+      
+      if (!Array.isArray(data)) {
+        console.error('renderTable expected an array but received:', data);
+        tbody.innerHTML = '<tr><td colspan="5">Error: Data is not an array.</td></tr>';
+        return;
+      }
+
+      data.forEach((tamuData, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${index + 1}</td>
-          <td>${guest.namaLengkap}</td>
-          <td>${guest.alamat}</td>
-          <td>${guest.keperluan}</td>
-          <td>${guest.noTelpon}</td>
+          <td>${tamuData.nama}</td>
+          <td>${tamuData.alamat}</td>
+          <td>${tamuData.keperluan}</td>
+          <td>${tamuData.no_telp}</td>
         `;
         tbody.appendChild(row);
       });
