@@ -28,7 +28,7 @@ class appBar extends HTMLElement {
                           </ul>
                       </li>
                       <li class="menu-item dropdown">
-                          <a href="#" class="dropdown-toggle">Data Pengunjung</a>
+                          <a href="#guest-data" class="dropdown-toggle">Data Pengunjung</a>
                           <ul class="dropdown-menu hidden">
                               <li><a href="#visit-car" class="dropdown-item" id="pengunjung-mobil">Data Pengunjung Mobil</a></li>
                               <li><a href="#visit-mot" class="dropdown-item" id="pengunjung-motor">Data Pengunjung Motor</a></li>

@@ -7,6 +7,9 @@ const loadContent = () => {
     const content = document.getElementById('content');
     
     switch (hash) {
+        case '#guest-data':
+            content.innerHTML = '<guest-data></guest-data>';
+            break;
         case '#input-cof':
             content.innerHTML = '<input-cof></input-cof>';
             break;
