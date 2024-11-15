@@ -1,4 +1,5 @@
 const pool = require('../../config/database.js');
+// const moment = require('moment');
 
 module.exports = {
     getAllTamu: callback => {
@@ -15,6 +16,7 @@ module.exports = {
     }, 
 
     createTamu: (data, callback) => {
+        // const formattedDate = moment(data.tanggal).format("DD-MM-YYYY");
         pool.query(
             `SELECT kapasitas_tersedia FROM parkir WHERE jenis_kendaraan = ?`,
             [data.jenis_kendaraan],
@@ -27,8 +29,9 @@ module.exports = {
 
                 if(kapasitasTersedia > 0){
                     pool.query(
-                        `INSERT INTO tamu(nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (?,?,?,?,?,?)`,
+                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (NOW(),?,?,?,?,?,?,?)`,
                         [
+                            data.plat_nomor,
                             data.nama,
                             data.alamat,
                             data.keperluan,
@@ -66,8 +69,9 @@ module.exports = {
                     );
                 } else {
                     pool.query(
-                        `INSERT INTO tamu(nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (?,?,?,?,?,?)`,
-                        [ 
+                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (NOW(),?,?,?,?,?,?,?)`,
+                        [
+                            data.plat_nomor,
                             data.nama,
                             data.alamat,
                             data.keperluan,
@@ -170,8 +174,8 @@ module.exports = {
         pool.query(
             `SELECT checkin.id_tamu, tamu.jenis_kendaraan FROM checkin
             JOIN tamu ON checkin.id_tamu = tamu.id_tamu
-            WHERE tamu.nama = ? AND tamu.jenis_kendaraan = ? AND checkin.waktu_checkout IS NULL`,
-            [data.nama, data.jenis_kendaraan],
+            WHERE tamu.plat_nomor = ? AND tamu.jenis_kendaraan = ? AND checkin.waktu_checkout IS NULL`,
+            [data.plat_nomor, data.jenis_kendaraan],
             (error, results) => {
                 if(error){
                     return callback(error);
