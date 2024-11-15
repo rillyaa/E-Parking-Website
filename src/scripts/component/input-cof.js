@@ -15,8 +15,8 @@ class inputCof extends HTMLElement {
             <div class="card">
                 <div class="input-form">
                     <p>
-                    <label for="name">Nama Lengkap</label><br>
-                    <input class="input-box" type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" required autocomplete="off">
+                    <label for="plat">Plat Nomor</label><br>
+                    <input class="input-box" type="text" name="plat" id="plat-kendaraan" placeholder="Masukkan Plat Nomor Kendaraan Anda" required autocomplete="off">
                     </p>
                     <p><br>
                         <button type="submit" name="submit" value="Submit">Submit</button>
@@ -56,7 +56,6 @@ class inputCof extends HTMLElement {
                 margin-top: 20px;
                 margin-left: 20%;
                 margin-bottom: 80px;
-                // line-height: 40px;
                 width: 60%;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
