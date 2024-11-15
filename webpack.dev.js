@@ -33,6 +33,8 @@ module.exports = merge(common, {
       "fs": false, // fs tidak diperlukan di frontend, set false jika tidak digunakan
       "zlib": false,
       "async_hooks": false,
+      "assert":false,
+      "util":false
     }
   }
 });
