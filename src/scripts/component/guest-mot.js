@@ -11,18 +11,26 @@ class guestMot extends HTMLElement {
   
         <div class="card">
             <div class="table-guest">
-                <p>
-                    <label for="date">Tanggal : </label>
-                    <input class="input-box" type="date" name="date" id="date" required autocomplete="off">
-                </p>
+                <div class="date-print">
+                    <p>
+                        <label for="date"><b>Tanggal : </b></label>
+                        <input class="input-box" type="date" name="date" id="date" required autocomplete="off">
+                    </p>
+
+                    <button class="print"><box-icon type='solid' name='printer' style="margin-right: 6px;"></box-icon> Cetak</button>
+                </div>
+
                 <div class="data-guest">
                     <table>
                         <tr>
                           <th>No</th>
+                          <th>Tanggal</th>
+                          <th>Plat Nomor</th>
                           <th>Nama Lengkap</th>
                           <th>Alamat</th>
                           <th>Keperluan</th>
                           <th>No. Telpon</th>
+                          <th>Status</th>
                         </tr>
                         <tbody id="guest-rows">
                             <!-- Rows will be added here dynamically -->
@@ -35,6 +43,10 @@ class guestMot extends HTMLElement {
   
       const style = document.createElement('style');
       style.textContent = `
+      *{
+        font-family: 'Poppins';
+      }
+
       .text-center {
           margin-top: 50px;
           text-align: center;
@@ -42,18 +54,25 @@ class guestMot extends HTMLElement {
       }
 
       .title {
-          font-size: 24px;
+          font-size: 36px;
           font-weight: bold;
           margin-bottom: 20px;
       }
 
       .card {
-          max-width: 800px;
+          max-width: 1000px;
           margin: 0 auto;
-          background-color: #f9f9f9;
+          background-color: rgba(255,255,255,0.5);
           padding: 20px;
           border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+          margin-bottom: 80px;
+      }
+
+      .date-print{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .input-box {
@@ -63,8 +82,31 @@ class guestMot extends HTMLElement {
           margin-left: 10px;
       }
 
+      input:focus{
+        outline: 4px solid #F9AE22;
+      }
+
+      .print {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        background-color: #F9AE22;
+        font-weight: 500;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 45px;
+        padding: 10px 15px;
+      }
+
+      .print .icon {
+        width: 20px;
+        height: 20px;
+      }
+
       .table-guest {
           overflow-x: auto;
+          margin-bottom: 20px;
       }
 
       table {
@@ -83,8 +125,12 @@ class guestMot extends HTMLElement {
           font-weight: bold;
       }
 
-      tbody tr:nth-child(even) {
+      tbody tr:nth-child(even), tbody tr:nth-child(even) {
           background-color: #f9f9f9;
+      }
+
+      table tbody tr:nth-child(odd) {
+        background-color: #fff;
       }
 
       table, th, td {
@@ -104,16 +150,11 @@ class guestMot extends HTMLElement {
           border-radius: 12px;
       }
 
-      .status-progress {
+      .status-checked-out {
           background-color: #4CAF50;
       }
 
-      .status-open {
-          background-color: #FFC107;
-          color: black;
-      }
-
-      .status-hold {
+      .status-not-checked-out {
           background-color: #F44336;
       }
       `;
@@ -156,12 +197,23 @@ class guestMot extends HTMLElement {
 
       data.forEach((tamuData, index) => {
         const row = document.createElement('tr');
+
+        let statusBadge;
+        if (tamuData.checkoutStatus === 'sudah') {
+          statusBadge = '<span class="status-badge status-checked-out">Checkout Completed</span>';
+        } else {
+          statusBadge = '<span class="status-badge status-not-checked-out">Checkout Pending</span>';
+        }
+
         row.innerHTML = `
           <td>${index + 1}</td>
+          <td>${tamuData.tanggal}</td>
+          <td>${tamuData.plat_nomor}</td>
           <td>${tamuData.nama}</td>
           <td>${tamuData.alamat}</td>
           <td>${tamuData.keperluan}</td>
           <td>${tamuData.no_telp}</td>
+          <td>${statusBadge}</td>
         `;
         tbody.appendChild(row);
       });

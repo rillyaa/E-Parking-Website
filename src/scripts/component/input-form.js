@@ -14,8 +14,8 @@ class inputForm extends HTMLElement {
         <div class="card">
             <div class="input-form">
                 <p>
-                    <label for="date">Tanggal</label><br>
-                    <input class="input-box" type="date" name="date" id="date" required autocomplete="off">
+                    <label for="plat">Plat Nomor</label><br>
+                    <input class="input-box" type="text" name="plat" id="plat-kendaraan" placeholder="Masukkan Plat Nomor Kendaraan Anda" required autocomplete="off">
                 </p>
                 <p>
                     <label for="name">Nama Lengkap</label><br>
