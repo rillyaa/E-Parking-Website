@@ -29,7 +29,7 @@ module.exports = {
 
                 if(kapasitasTersedia > 0){
                     pool.query(
-                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (NOW(),?,?,?,?,?,?,?)`,
+                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (CURDATE(),?,?,?,?,?,?,?)`,
                         [
                             data.plat_nomor,
                             data.nama,
@@ -69,7 +69,7 @@ module.exports = {
                     );
                 } else {
                     pool.query(
-                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (NOW(),?,?,?,?,?,?,?)`,
+                        `INSERT INTO tamu(tanggal, plat_nomor, nama, alamat, keperluan, no_telp, jenis_kendaraan, catatan) VALUES (CURDATE(),?,?,?,?,?,?,?)`,
                         [
                             data.plat_nomor,
                             data.nama,
@@ -240,5 +240,56 @@ module.exports = {
                 return callback(null, results);
             }
         )
-    }
+    },
+
+    getGuestData: callback => {
+        pool.query(
+            `SELECT 
+                tamu.*,
+                checkin.waktu_checkin,
+                checkin.waktu_checkout,
+                CASE 
+                    WHEN checkin.waktu_checkout IS NOT NULL THEN 'sudah'
+                    ELSE 'belum'
+                END AS checkoutStatus
+            FROM tamu
+            LEFT JOIN checkin ON tamu.id_tamu = checkin.id_tamu;
+            `,
+            [],
+            (error, results, fields) => {
+                if(error){
+                    return callback(error);
+                }
+                return callback(null, results);
+            }
+        )
+    },
+
+    getGuestDatabyType: (data, callback) => {
+        pool.query(
+            `SELECT 
+                tamu.*,
+                checkin.waktu_checkin,
+                checkin.waktu_checkout,
+                CASE 
+                    WHEN checkin.waktu_checkout IS NOT NULL THEN 'sudah'
+                    ELSE 'belum'
+                END AS checkoutStatus
+            FROM tamu
+            LEFT JOIN checkin ON tamu.id_tamu = checkin.id_tamu
+            WHERE tamu.jenis_kendaraan = ?
+            `,
+            [data.jenis_kendaraan],
+            (error, results) => {
+                if(error){
+                    return callback(error);
+                }
+                if(results.length === 0){
+                    return callback(null, {message: 'Tidak Ditemukan Tamu dengan Jenis Kendaraan Tersebut'})
+                }
+                return callback(null, results);
+            }
+        )
+    },
+    // Masih PR benerin nama API
 }

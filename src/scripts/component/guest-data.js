@@ -60,7 +60,7 @@ class guestData extends HTMLElement {
       }
 
       .card {
-          max-width: 1000px;
+          max-width: 1054px;
           margin: 0 auto;
           background-color: rgba(255,255,255,0.5);
           padding: 20px;
@@ -165,14 +165,13 @@ class guestData extends HTMLElement {
   
     async fetchData() {
       try {
-        const tamuResponse = await fetch('http://localhost:5000/api/tamu', {
+        const tamuResponse = await fetch('http://localhost:5000/api/guestData', {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' }
         });
 
         const tamuData = await tamuResponse.json();
         
-        // Akses langsung array listTamu di dalam objek tamuData
         if (Array.isArray(tamuData.listTamu)) {
           this.renderTable(tamuData.listTamu);
         } else {
@@ -205,9 +204,10 @@ class guestData extends HTMLElement {
           statusBadge = '<span class="status-badge status-not-checked-out">Checkout Pending</span>';
         }
     
+        const formattedDate = tamuData.tanggal.substring(0, 10); 
         row.innerHTML = `
           <td>${index + 1}</td>
-          <td>${tamuData.tanggal}</td>
+          <td>${formattedDate}</td>
           <td>${tamuData.plat_nomor}</td>
           <td>${tamuData.nama}</td>
           <td>${tamuData.alamat}</td>
@@ -219,10 +219,86 @@ class guestData extends HTMLElement {
         tbody.appendChild(row);
       });
     }
+
+    
   
     connectedCallback() {
       this.fetchData();
+
+      // Event listener untuk tombol cetak
+      this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
+        try {
+          // Belum menerapkan Filter Tanggal, masih PR 
+          const response = await fetch('http://localhost:5000/api/tamu', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const result = await response.json();
+
+          console.log('Respons API:', result);
+  
+          // checking data array 
+          if (result.message === 'Tamu Fetched Successfully' && Array.isArray(result.listTamu)) {
+            printData(result.listTamu); 
+          } else {
+            console.error('Failed to fetch printable data:', result.message);
+            alert('Gagal mengambil data untuk cetak.');
+          }
+        } catch (error) {
+          console.error('Error fetching printable data:', error);
+          alert('Terjadi kesalahan saat mengambil data untuk cetak.');
+        }
+      });
     }
   }
+  
+  function printData(data) {
+    if (!Array.isArray(data)) {
+      console.error('Data yang diterima bukan array:', data);
+      alert('Data yang diterima untuk cetak tidak valid.');
+      return;
+    }
+
+    const printWindow = window.open('', '', 'width=800,height=600');
+    
+    // Header Tabel Cetak
+    printWindow.document.write('<h1>Data Pengunjung</h1>');
+    printWindow.document.write('<table border="1" style="width: 100%; border-collapse: collapse;">');
+    printWindow.document.write(`
+      <tr>
+        <th>No</th>
+        <th>Plat Nomor</th>
+        <th>Nama Lengkap</th>
+        <th>Alamat</th>
+        <th>Keperluan</th>
+        <th>No. Telpon</th>
+        // <th>Jenis Kendaraan</th>
+        // <th>Catatan</th>
+        // <th>Waktu Check-In</th>
+        // <th>Waktu Check-Out</th>
+        // <th>Durasi Parkir</th>
+      </tr>
+    `);
+  
+    // Membuat Format Tabel untuk DiPrint
+    data.forEach((row, index) => {
+      printWindow.document.write(`
+        <tr>
+          <td>${index + 1}</td>
+          <td>${row.plat_nomor}</td>
+          <td>${row.nama}</td>
+          <td>${row.alamat}</td>
+          <td>${row.keperluan}</td>
+        </tr>
+      `);
+    });
+  
+    printWindow.document.write('</table>');
+    printWindow.document.close();
+  
+    // Cetak
+    printWindow.print();
+  }
+  
   
   customElements.define('guest-data', guestData);

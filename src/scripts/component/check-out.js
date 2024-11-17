@@ -157,7 +157,13 @@ class checkOut extends HTMLElement {
         
         const carCard = shadow.querySelector('#car-card button');
             carCard.addEventListener('click', (event) => {
-                event.preventDefault(); 
+                event.preventDefault();
+
+                const tamuData = {
+                    jenis_kendaraan: 'Mobil'
+                }
+
+                localStorage.setItem('tamuData', JSON.stringify(tamuData))
                 window.location.hash = '#input-cof';
       
                 const content = document.getElementById('content');
@@ -171,6 +177,11 @@ class checkOut extends HTMLElement {
         const motorCard = shadow.querySelector('#motor-card button');
             motorCard.addEventListener('click', (event) => {
                 event.preventDefault(); 
+                const tamuData = {
+                    jenis_kendaraan: 'Motor'
+                }
+
+                localStorage.setItem('tamuData', JSON.stringify(tamuData))
                 window.location.hash = '#input-cof';
       
                 const content = document.getElementById('content');

@@ -60,7 +60,7 @@ class guestCar extends HTMLElement {
       }
 
       .card {
-          max-width: 1000px;
+          max-width: 1054px;
           margin: 0 auto;
           background-color: rgba(255,255,255,0.5);
           padding: 20px;
@@ -165,7 +165,7 @@ class guestCar extends HTMLElement {
   
     async fetchData() {
       try {
-        const tamuResponse = await fetch('http://localhost:5000/api/dataTamu', {
+        const tamuResponse = await fetch('http://localhost:5000/api/guestByType', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ jenis_kendaraan: 'Mobil'}),
@@ -205,9 +205,10 @@ class guestCar extends HTMLElement {
           statusBadge = '<span class="status-badge status-not-checked-out">Checkout Pending</span>';
         }
 
+        const formattedDate = tamuData.tanggal.substring(0, 10); 
         row.innerHTML = `
           <td>${index + 1}</td>
-          <td>${tamuData.tanggal}</td>
+          <td>${formattedDate}</td>
           <td>${tamuData.plat_nomor}</td>
           <td>${tamuData.nama}</td>
           <td>${tamuData.alamat}</td>
