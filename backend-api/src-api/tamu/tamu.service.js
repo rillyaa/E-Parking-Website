@@ -4,7 +4,7 @@ const pool = require('../../config/database.js');
 module.exports = {
     getAllTamu: callback => {
         pool.query(
-            `SELECT * FROM tamu`,
+            `SELECT t.plat_nomor, t.nama, t.alamat, t.keperluan, t.jenis_kendaraan, t.no_telp, t.catatan, c.waktu_checkin, c.waktu_checkout FROM tamu t LEFT JOIN checkin c ON t.id_tamu = c.id_tamu;`,
             [],
             (error, results, fields) => {
                 if(error){

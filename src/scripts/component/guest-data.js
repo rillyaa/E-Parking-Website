@@ -199,9 +199,9 @@ class guestData extends HTMLElement {
         
         let statusBadge;
         if (tamuData.checkoutStatus === 'sudah') {
-          statusBadge = '<span class="status-badge status-checked-out">Checkout Completed</span>';
+          statusBadge = '<span class="status-badge status-checked-out">Completed</span>';
         } else {
-          statusBadge = '<span class="status-badge status-not-checked-out">Checkout Pending</span>';
+          statusBadge = '<span class="status-badge status-not-checked-out">Pending</span>';
         }
     
         const formattedDate = tamuData.tanggal.substring(0, 10); 
@@ -272,16 +272,30 @@ class guestData extends HTMLElement {
         <th>Alamat</th>
         <th>Keperluan</th>
         <th>No. Telpon</th>
-        // <th>Jenis Kendaraan</th>
-        // <th>Catatan</th>
-        // <th>Waktu Check-In</th>
-        // <th>Waktu Check-Out</th>
-        // <th>Durasi Parkir</th>
+        <th>Jenis Kendaraan</th>
+        <th>Catatan</th>
+        <th>Waktu Check-In</th>
+        <th>Waktu Check-Out</th>
+        <th>Durasi Parkir</th>
       </tr>
     `);
   
     // Membuat Format Tabel untuk DiPrint
     data.forEach((row, index) => {
+      let durasiParkir = '-';
+      if (row.waktu_checkin && row.waktu_checkout) {
+        const checkin = new Date(row.waktu_checkin);
+        const checkout = new Date(row.waktu_checkout);
+
+        if (!isNaN(checkin) && !isNaN(checkout)) {
+          const selisihMs = checkout - checkin; // Selisih dalam milidetik
+          const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
+          const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
+          const durasiDetik = Math.floor((selisihMs % (1000 * 60)) / 1000);
+          durasiParkir = `${durasiJam} jam ${durasiMenit} menit ${durasiDetik} detik`;
+        }
+      }
+
       printWindow.document.write(`
         <tr>
           <td>${index + 1}</td>
@@ -289,6 +303,12 @@ class guestData extends HTMLElement {
           <td>${row.nama}</td>
           <td>${row.alamat}</td>
           <td>${row.keperluan}</td>
+          <td>${row.no_telp}</td>
+          <td>${row.jenis_kendaraan}</td>
+          <td>${row.catatan}</td>
+          <td>${row.waktu_checkin}</td>
+          <td>${row.waktu_checkout}</td>
+          <td>${durasiParkir}</td>
         </tr>
       `);
     });
