@@ -1,3 +1,5 @@
+const { async } = require('regenerator-runtime');
+
 class inputCof extends HTMLElement {
     constructor() {
         super();
@@ -15,8 +17,8 @@ class inputCof extends HTMLElement {
             <div class="card">
                 <div class="input-form">
                     <p>
-                    <label for="name">Nama Lengkap</label><br>
-                    <input class="input-box" type="text" name="name" id="name" placeholder="Masukkan Nama Lengkap Anda" required autocomplete="off">
+                    <label for="plat">Plat Nomor</label><br>
+                    <input class="input-box" type="text" name="plat" id="plat_nomor" placeholder="Masukkan Plat Nomor Kendaraan Anda" required autocomplete="off">
                     </p>
                     <p><br>
                         <button type="submit" name="submit" value="Submit">Submit</button>
@@ -56,7 +58,6 @@ class inputCof extends HTMLElement {
                 margin-top: 20px;
                 margin-left: 20%;
                 margin-bottom: 80px;
-                // line-height: 40px;
                 width: 60%;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
@@ -104,20 +105,74 @@ class inputCof extends HTMLElement {
         shadow.appendChild(inputcof);
         shadow.appendChild(style);
 
-        // Event listener untuk handle form submission
-        inputcof.addEventListener('submit', (event) => {
-            event.preventDefault(); 
-
-            if (shadow.getElementById('name').checkValidity()) {
+        inputcof.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Mencegah halaman reload saat submit form
+            
+            // Ambil plat nomor dari input form
+            const platNomor = shadow.getElementById('plat_nomor').value;
+            
+            // Ambil data tamu dari localStorage yang sudah ada
+            let tamuData = JSON.parse(localStorage.getItem('tamuData'));
+            
+            // Pastikan data tamu dan jenis kendaraan ada di localStorage
+            if (!tamuData) {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Check-Out berhasil',
-                    text: 'Tamu Berhasil Checkout dan Data Parkir Diperbarui',
+                    icon: 'error',
+                    title: 'Data Tidak Ditemukan',
+                    text: 'Data tamu tidak ditemukan di localStorage.',
                     confirmButtonText: 'Tutup'
                 });
-                window.location.hash = '#check-out';
-            } else {
-                shadow.getElementById('name').reportValidity();
+                return;
+            }
+        
+            // Gabungkan data dari input dan localStorage
+            tamuData = {
+                plat_nomor: platNomor, // Plat nomor yang baru diinput
+                jenis_kendaraan: tamuData.jenis_kendaraan // Jenis kendaraan dari localStorage
+            };
+        
+            try {
+                const response = await fetch('http://localhost:5000/api/checkoutTamu', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(tamuData),
+                });
+        
+                // Cek apakah response sukses
+                const result = await response.json();
+        
+                if (response.ok) {
+                    // Jika sukses, tampilkan pesan sukses
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Check-Out berhasil',
+                        text: result.message, // Pesan dari API
+                        confirmButtonText: 'Tutup'
+                    });
+                    window.location.hash = '#check-out'; // Redirect ke halaman checkout setelah berhasil
+                } else {
+                    // Jika API gagal, tampilkan pesan error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Check-Out',
+                        text: result.message || 'Terjadi kesalahan, silakan coba lagi.',
+                        confirmButtonText: 'Tutup'
+                    });
+                }
+            } catch (error) {
+                // Menangani error dari request fetch
+                console.error('Error fetching API:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi kesalahan',
+                    text: 'Gagal menghubungi server, silakan coba lagi.',
+                    confirmButtonText: 'Tutup'
+                });
+            }
+        
+            // Validasi input sebelum melanjutkan
+            if (shadow.getElementById('plat_nomor').checkValidity()) {
+                shadow.getElementById('plat_nomor').reportValidity();
             }
         });
     }

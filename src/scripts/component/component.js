@@ -5,3 +5,6 @@ import '../component/stat-car.js';
 import '../component/stat-mot.js';
 import '../component/input-cof.js';
 import '../component/check-out.js';
+import '../component/guest-data.js';
+import '../component/guest-car.js';
+import '../component/guest-mot.js';
