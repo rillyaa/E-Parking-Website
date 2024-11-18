@@ -9,6 +9,9 @@ body {
     background-image: url("../public/img/bg.png");
     background-position: center;
     background-size: cover;
-    display: block;
-    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Gambar latar belakang tetap saat menggulir */
+    min-height: 100vh; /* Pastikan tinggi minimal adalah 100% dari viewport */
+    margin: 0; /* Hapus margin default dari body */
+    overflow-x: hidden;
 }
