@@ -13,8 +13,8 @@ class guestMot extends HTMLElement {
             <div class="table-guest">
                 <div class="date-print">
                     <p>
-                        <label for="date"><b>Tanggal : </b></label>
-                        <input class="input-box" type="date" name="date" id="date" required autocomplete="off">
+                        <label for="daterange"><b>Tanggal : </b></label>
+                        <input type="text" class="input-box daterange" name="daterange" value="11/22/2024 - 12/12/2024" />
                     </p>
 
                     <button class="print"><box-icon type='solid' name='printer' style="margin-right: 6px;"></box-icon> Cetak</button>
@@ -29,7 +29,7 @@ class guestMot extends HTMLElement {
                           <th>Nama Lengkap</th>
                           <th>Alamat</th>
                           <th>Keperluan</th>
-                          <th>No. Telpon</th>
+                          <th>No. Telp</th>
                           <th>Status</th>
                         </tr>
                         <tbody id="guest-rows">
@@ -200,9 +200,9 @@ class guestMot extends HTMLElement {
 
         let statusBadge;
         if (tamuData.checkoutStatus === 'sudah') {
-          statusBadge = '<span class="status-badge status-checked-out">Checkout Completed</span>';
+          statusBadge = '<span class="status-badge status-checked-out">Completed</span>';
         } else {
-          statusBadge = '<span class="status-badge status-not-checked-out">Checkout Pending</span>';
+          statusBadge = '<span class="status-badge status-not-checked-out">Pending</span>';
         }
 
         const formattedDate = tamuData.tanggal.substring(0, 10); 
@@ -222,7 +222,142 @@ class guestMot extends HTMLElement {
   
     connectedCallback() {
       this.fetchData();
+
+      // Inisialisasi daterangepicker
+      const daterangeInput = this.shadowRoot.querySelector('.daterange');
+      $(daterangeInput).daterangepicker({
+        opens: 'left',
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      }, (start, end) => {
+        console.log("Selected range: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD'));
+        // Anda dapat melakukan sesuatu dengan tanggal yang dipilih
+        this.handleDateRangeSelection(start, end);
+      });
+
+      // Event listener untuk tombol cetak
+      this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
+        try {
+          // Belum menerapkan Filter Tanggal, masih PR 
+          const response = await fetch('http://localhost:5000/api/guestByType', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jenis_kendaraan: 'Motor' })
+          });
+          const result = await response.json();
+
+          console.log('Respons API:', result);
+  
+          // checking data array 
+          if (result.message === 'Guest Data Fetched Successfully' && Array.isArray(result.DataTamu)) {
+            printData(result.DataTamu); 
+          } else {
+            console.error('Failed to fetch printable data:', result.message);
+            alert('Gagal mengambil data untuk cetak.');
+          }
+        } catch (error) {
+          console.error('Error fetching printable data:', error);
+          alert('Terjadi kesalahan saat mengambil data untuk cetak.');
+        }
+      });
     }
+
+    handleDateRangeSelection(start, end) {
+      const startDate = start.format('YYYY-MM-DD');
+      const endDate = end.format('YYYY-MM-DD');
+      
+      // Ambil data dari API dengan filter tanggal
+      this.fetchFilteredData(startDate, endDate);
+    }
+    
+    async fetchFilteredData(startDate, endDate) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/guestByType?start=${startDate}&end=${endDate}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jenis_kendaraan: 'Motor' })
+        });
+        const data = await response.json();
+        if (Array.isArray(data.listTamu)) {
+          this.renderTable(data.listTamu);
+        } else {
+          console.error('Expected an array but received:', data);
+          this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error: Data is not an array.</p>`;
+        }
+      } catch (error) {
+        console.error('Failed to fetch filtered data:', error.message);
+        this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error loading data.</p>`;
+      }
+    }
+  }
+  
+  function printData(data) {
+    if (!Array.isArray(data)) {
+      console.error('Data yang diterima bukan array:', data);
+      alert('Data yang diterima untuk cetak tidak valid.');
+      return;
+    }
+
+    const printWindow = window.open('', '', 'width=800,height=600');
+    
+    // Header Tabel Cetak
+    printWindow.document.write('<h1>Data Pengunjung</h1>');
+    printWindow.document.write('<table border="1" style="width: 100%; border-collapse: collapse;">');
+    printWindow.document.write(`
+      <tr>
+        <th>No</th>
+        <th>Plat Nomor</th>
+        <th>Nama Lengkap</th>
+        <th>Alamat</th>
+        <th>Keperluan</th>
+        <th>No. Telp</th>
+        <th>Jenis Kendaraan</th>
+        <th>Catatan</th>
+        <th>Waktu Check-In</th>
+        <th>Waktu Check-Out</th>
+        <th>Durasi Parkir</th>
+      </tr>
+    `);
+  
+    // Membuat Format Tabel untuk DiPrint
+    data.forEach((row, index) => {
+      let durasiParkir = '-';
+      if (row.waktu_checkin && row.waktu_checkout) {
+        const checkin = new Date(row.waktu_checkin);
+        const checkout = new Date(row.waktu_checkout);
+
+        if (!isNaN(checkin) && !isNaN(checkout)) {
+          const selisihMs = checkout - checkin; // Selisih dalam milidetik
+          const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
+          const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
+          const durasiDetik = Math.floor((selisihMs % (1000 * 60)) / 1000);
+          durasiParkir = `${durasiJam} jam ${durasiMenit} menit ${durasiDetik} detik`;
+        }
+      }
+
+      printWindow.document.write(`
+        <tr>
+          <td>${index + 1}</td>
+          <td>${row.plat_nomor}</td>
+          <td>${row.nama}</td>
+          <td>${row.alamat}</td>
+          <td>${row.keperluan}</td>
+          <td>${row.no_telp}</td>
+          <td>${row.jenis_kendaraan}</td>
+          <td>${row.catatan}</td>
+          <td>${row.waktu_checkin}</td>
+          <td>${row.waktu_checkout}</td>
+          <td>${durasiParkir}</td>
+        </tr>
+      `);
+    });
+  
+    printWindow.document.write('</table>');
+    printWindow.document.close();
+  
+    // Cetak
+    printWindow.print();
   }
   
   customElements.define('guest-mot', guestMot);
