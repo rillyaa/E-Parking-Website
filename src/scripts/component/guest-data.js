@@ -13,8 +13,8 @@ class guestData extends HTMLElement {
             <div class="table-guest">
                 <div class="date-print">
                     <p>
-                        <label for="date"><b>Tanggal : </b></label>
-                        <input class="input-box" type="date" name="date" id="date" required autocomplete="off">
+                        <label for="daterange"><b>Tanggal : </b></label>
+                        <input type="text" class="input-box daterange" name="daterange" value="11/22/2024 - 12/12/2024" />
                     </p>
 
                     <button class="print"><box-icon type='solid' name='printer' style="margin-right: 6px;"></box-icon> Cetak</button>
@@ -29,7 +29,7 @@ class guestData extends HTMLElement {
                           <th>Nama Lengkap</th>
                           <th>Alamat</th>
                           <th>Keperluan</th>
-                          <th>No. Telpon</th>
+                          <th>No. Telp</th>
                           <th>Status</th>
                         </tr>
                         <tbody id="guest-rows">
@@ -218,12 +218,23 @@ class guestData extends HTMLElement {
         
         tbody.appendChild(row);
       });
-    }
-
-    
+    }    
   
     connectedCallback() {
       this.fetchData();
+
+      // Inisialisasi daterangepicker
+      const daterangeInput = this.shadowRoot.querySelector('.daterange');
+      $(daterangeInput).daterangepicker({
+        opens: 'left',
+        locale: {
+          format: 'MM/DD/YYYY'
+        }
+      }, (start, end) => {
+        console.log("Selected range: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD'));
+        // Anda dapat melakukan sesuatu dengan tanggal yang dipilih
+        this.handleDateRangeSelection(start, end);
+      });
 
       // Event listener untuk tombol cetak
       this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
@@ -250,6 +261,33 @@ class guestData extends HTMLElement {
         }
       });
     }
+    
+    handleDateRangeSelection(start, end) {
+      const startDate = start.format('YYYY-MM-DD');
+      const endDate = end.format('YYYY-MM-DD');
+      
+      // Ambil data dari API dengan filter tanggal
+      this.fetchFilteredData(startDate, endDate);
+    }
+    
+    async fetchFilteredData(startDate, endDate) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/guestData?start=${startDate}&end=${endDate}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        if (Array.isArray(data.listTamu)) {
+          this.renderTable(data.listTamu);
+        } else {
+          console.error('Expected an array but received:', data);
+          this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error: Data is not an array.</p>`;
+        }
+      } catch (error) {
+        console.error('Failed to fetch filtered data:', error.message);
+        this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error loading data.</p>`;
+      }
+    }
   }
   
   function printData(data) {
@@ -271,7 +309,7 @@ class guestData extends HTMLElement {
         <th>Nama Lengkap</th>
         <th>Alamat</th>
         <th>Keperluan</th>
-        <th>No. Telpon</th>
+        <th>No. Telp</th>
         <th>Jenis Kendaraan</th>
         <th>Catatan</th>
         <th>Waktu Check-In</th>
@@ -319,6 +357,5 @@ class guestData extends HTMLElement {
     // Cetak
     printWindow.print();
   }
-  
   
   customElements.define('guest-data', guestData);
