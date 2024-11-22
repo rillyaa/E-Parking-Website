@@ -25,7 +25,7 @@ class appBar extends HTMLElement {
                             <ul class="dropdown-menu statistik-parkir hidden">
                                 <li><a href="#stat-car" class="dropdown-item" id="dropdown-mobil">Mobil</a></li>
                                 <li><a href="#stat-mot" class="dropdown-item" id="dropdown-motor">Motor</a></li>
-                            </ul>
+                            </ul> 
                         </li>
                         <li class="menu-item dropdown">
                             <a href="#guest-data" class="dropdown-toggle">Data Pengunjung</a>
@@ -51,7 +51,6 @@ class appBar extends HTMLElement {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
             width: 100%;
         }
 
@@ -59,37 +58,42 @@ class appBar extends HTMLElement {
             display: flex;
             align-items: center;
             gap: 10px;
+            padding: 16px 20px;
         }
 
         .logo img {
-            height: 76px;
             cursor: pointer;
+            width: 12%;
+            min-width: 48px;
+            height: auto;
         }
 
         /* Menu Container */
         .menu {
             position: relative;
             display: flex;
-            margin-right: 80px;
+            margin-right: 20px;
+            padding: 16px 20px;
         }
 
         /* Horizontal Menu for Desktop */
         .navbar ul {
             display: flex;
-            gap: 20px;
+            gap: 8px;
             list-style: none;
         }
 
         /* Menu Items */
         .menu-item {
             position: relative;
+            white-space: nowrap;
         }
 
         .menu-item a {
             color: white;
-            font-size: 20px;
             font-weight: 500;
             text-decoration: none;
+            font-size: 1.7vw;
         }
 
         /* More Specific - Overrides the above */
@@ -108,11 +112,14 @@ class appBar extends HTMLElement {
         }
 
         .dropdown-menu.statistik-parkir {
-            width: 120px;
+            width: 10vw;
+        }
+        .dropdown-menu.statistik-parkir.hidden {
+            display: none;
         }
 
         .dropdown-menu.data-pengunjung {
-            width: 220px;
+            width: 18vw;
         }
 
         .dropdown-menu li{
@@ -131,9 +138,13 @@ class appBar extends HTMLElement {
         }
 
         /* Show the dropdown on hover */
-        .menu-item.dropdown:hover .dropdown-menu,
+       .menu-item.dropdown:hover .dropdown-menu,
         .menu-item.dropdown.active .dropdown-menu {
             display: block;
+        }
+
+        .menu-item.dropdown .dropdown-menu {
+            display: none;
         }
 
         .dropdown-item {
@@ -151,7 +162,14 @@ class appBar extends HTMLElement {
         }
 
         /* Mobile Styles */
+        @media screen and (max-width: 576px){
+
+        }
+
         @media screen and (max-width: 768px) {
+            .menu {
+	            margin-right: 88px;
+            }
             /* Show the menu button on mobile */
             #menu-toggle {
                 display: block;
@@ -160,47 +178,59 @@ class appBar extends HTMLElement {
                 border: none;
                 cursor: pointer;
                 font-size: 24px;
+                position: relative;
+                left: 64px;
             }
 
             .navbar {
-                display: none; /* Sembunyikan navbar secara default */
-                flex-direction: column; /* Atur menu menjadi kolom */
-                position: absolute; /* Posisi absolut untuk menu */
-                top: 100%; /* Tempatkan di bawah tombol menu */
-                left: 0; /* Rata kiri */
-                // width: calc(100% - 40px); /* Lebar menu 100% */
-                width: 100px; /* Lebar menu 100% */
-                background-color: #333; /* Warna latar belakang menu */
-                z-index: 1000; /* Pastikan menu di atas elemen lain */
-                padding: 10px 0; /* Padding untuk menu */
-                max-height: 300px; /* Tinggi maksimum untuk menu */
-                // overflow-y: auto; /* Tambahkan scroll jika melebihi tinggi maksimum */
-                // margin-right: 20px;
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100px;
+                background-color: #333;
+                z-index: 1000;
+                padding: 10px 0;
+                max-height: 300px;
             }
 
             .navbar.visible {
-                display: flex; /* Tampilkan menu saat toggle */
+                display: contents; 
             }
 
             #menu-list{
-                // margin-right: 80px;
-                float: right;
+                right: -12vw;
+                top: 40px;
+                position: absolute;
+                background-color: #000;
+                height: auto;
+                border-radius: 12px;
+                transform: translateX(-40px);
             }
 
             .menu-item {
-                width: 100%; /* Pastikan item menu mengambil lebar penuh */
+                width: 100%;
+                white-text: no-wrap;
             }
 
             .menu-item a{
-                padding: 10px; /* Tambahkan padding untuk item menu */
-                text-align: center; /* Rata tengah teks */
-                display: block; /* Pastikan link mengambil lebar penuh */
-                font-size: 18px; /* Ukuran font yang lebih kecil untuk mobile */
+                padding: 10px;
+                text-align: center;
+                display: block;
+                font-size: 2.3vw;
             }
 
             .dropdown-menu {
-                position: relative; /* Atur posisi dropdown */
-                width: 100%; /* Lebar dropdown 100% */
+                position: relative;
+            }
+
+            .dropdown-menu.statistik-parkir {
+                width: 16vw;
+            }
+
+            .dropdown-menu.data-pengunjung {
+                width: 32vw;
             }
 
             .dropdown-menu li {
@@ -229,11 +259,6 @@ class appBar extends HTMLElement {
                 display: none;
             }
 
-            /* Show the menu when toggled */
-            .navbar.visible {
-                display: flex; /* Tampilkan menu saat toggle */
-            }
-
             /* Show the menu vertically when toggled */
             .menu ul.visible {
                 display: flex;
@@ -259,6 +284,8 @@ class appBar extends HTMLElement {
             background-color: #444;
             border-radius: 12px;
         }
+
+
     `;
 
         shadow.appendChild(nav);
@@ -300,8 +327,8 @@ class appBar extends HTMLElement {
         // Dropdown toggle on hover
         // Dropdown toggle on hover and click
         // Dropdown toggle on hover (use CSS for hover instead of JS)
-        const dropdown = shadow.querySelector('.dropdown');
-        const dropdownMenu = shadow.querySelector('.dropdown-menu');
+        const dropdown = shadow.querySelectorAll('.dropdown');
+        const dropdownMenu = shadow.querySelectorAll('.dropdown-menu');
 
         // Hover functionality (CSS will handle this, no need for JS)
         dropdown.addEventListener('mouseenter', () => {

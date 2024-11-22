@@ -166,7 +166,7 @@ class checkIn extends HTMLElement {
         shadow.appendChild(style);
 
         const carCard = shadow.querySelector('#car-card button');
-        carCard.addEventListener('click', async() => {
+        carCard.addEventListener('click', async () => {
             const tamuData = JSON.parse(localStorage.getItem('tamuData'));
             tamuData.jenis_kendaraan = 'Mobil';
 

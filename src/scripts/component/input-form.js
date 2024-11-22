@@ -48,32 +48,35 @@ class inputForm extends HTMLElement {
                 box-sizing: border-box;
             }
 
+            .text-center .card{
+                display: flex;
+            }
+
             .text-center{
-                margin-top: 50px;
+                margin-top: 1.6vw;
                 color: white;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                row-gap: 20px;
+                row-gap: 1vw;
             }
 
             .text-center > h2 {
-                font-size: 36px;
+                font-size: clamp(20px, 5vw, 40px);
             }
-
+                
             .text-center > h1 {
-                font-size: 44px;
+                font-size: clamp(24px, 6vw, 44px);
             }
 
             .card{
-                display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-top: 40px;
-                margin-left: 20%;
+                margin: auto;
+                margin-top: 28px;
                 margin-bottom: 80px;
                 line-height: 40px;
-                width: 60%;
+                width: 60vw;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
@@ -98,6 +101,7 @@ class inputForm extends HTMLElement {
             label {
                 color: black;
                 font-weight: 500;
+                font-size: clamp(14px, 2vw, 18px);
             }
 
             .input-box{
@@ -109,8 +113,8 @@ class inputForm extends HTMLElement {
             }
 
             .input-box, button{
-                min-width: 92vh;
-                min-height: 8vh;
+                width: 44vw;
+                height: clamp(28px, 3.6rem, 68px);
                 border-radius: 6px;
                 border: none;
             }
@@ -118,57 +122,9 @@ class inputForm extends HTMLElement {
             button{
                 background-color: #F9AE22;
                 color: black;
-                font-size: 16px;
+                font-size: clamp(14px, 2vw, 18px);
                 font-weight: bold;
                 cursor: pointer;
-            }
-
-            /* Untuk layar lebih kecil dari 576px (ponsel) */
-            @media screen and (max-width: 576px){
-                .text-center{
-                    row-gap: 4px;
-                }
-
-                .card {
-                    margin-left: 8%;
-                    width: 80%;
-                }
-
-                .input-box, button{
-                    min-width: 48vh;
-                }
-            }
-
-            /* Untuk layar lebih besar dari 576px tapi lebih kecil dari 768px (tablet kecil) */
-            @media screen and (min-width: 576px) and (max-width: 768px) {
-                .text-center{
-                    row-gap: 12px;
-                }
-
-                .card{
-                    margin-left: 12%;
-                    width: 80%;
-                }
-
-                .input-box, button{
-                    min-width: 80vh;
-                }
-            }
-
-            /* Untuk layar lebih besar dari 768px tapi lebih kecil dari 1000px (tablet atau laptop kecil) */
-            @media screen and (min-width: 768px) and (max-width: 1000px){
-                .text-center{
-                    row-gap: 16px;
-                }
-
-                .card {
-                    margin-left: 10%;
-                    width: 80%;
-                }
-
-                .input-box, button{
-                    min-width: 72vh;
-                }
             }
         `;
 
@@ -179,7 +135,7 @@ class inputForm extends HTMLElement {
         const guestBookForm = shadow.querySelector('#guest-book-form');
 
         guestBookForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); 
+            event.preventDefault();
 
             const tamuData = {
                 plat_nomor: shadow.getElementById('plat_nomor').value,
