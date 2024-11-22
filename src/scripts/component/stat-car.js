@@ -35,38 +35,55 @@ class statCar extends HTMLElement {
 
         const style = document.createElement('style');
         style.textContent = `
-            .text-center {
+            .text-center .capacity-card{
+            display:flex;
+        }
+
+            .text-center{
                 color: white;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                row-gap: 20px;
+                row-gap: 1vw;
             }
 
-        .text-center > h2 {
-            font-size: 36px;
-        }
-
+            .text-center > h2 {
+                font-size: clamp(20px, 5vw, 40px);
+                text-align: center
+            }
+            
             .capacity-card {
+                justify-content: center;
+                align-items: center;
+                margin: auto;
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
             }
-
-            .card {
-                width: 50%;
-                margin-left: 25%;
+                
+            .card{
+                width: 48vw;
+                height: auto;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
             }
-
-            .card-content {
+                    
+            .card-content{
                 color: white;
                 display: flex;
                 justify-content: space-between;
-                padding: 0 52px;
                 align-items: center;
+                padding: 0 52px;
+                margin: auto;
+            }
+
+            .card-content > h3{
+                font-size: clamp(8px, 3vw, 24px);
+            }
+
+            .card-content > h2{
+                font-size: clamp(12px, 4.2vw, 32px);
             }
         `;
 

@@ -61,9 +61,9 @@ class guestCar extends HTMLElement {
 
       .card {
           max-width: 1054px;
-          margin: 0 auto;
+          margin: 0 4vw;
           background-color: rgba(255,255,255,0.5);
-          padding: 20px;
+          padding: 4vw;
           border-radius: 8px;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
           margin-bottom: 80px;
