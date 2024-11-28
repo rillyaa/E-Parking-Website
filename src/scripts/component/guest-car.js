@@ -43,28 +43,28 @@ class guestCar extends HTMLElement {
   
       const style = document.createElement('style');
       style.textContent = `
-      * {
+      *{
         font-family: 'Poppins';
       }
 
       .text-center {
-          margin-top: 50px;
+          margin-top: 1.6vw;
           text-align: center;
           color: #fff;
       }
 
-      .title {
-          font-size: 36px;
-          font-weight: bold;
-          margin-bottom: 20px;
+      .text-center > h2 {
+        font-size: clamp(20px, 5vw, 40px);
       }
 
       .card {
-          max-width: 1054px;
-          margin: 0 4vw;
+          width: 80vw;
+          margin: auto;
+          margin-top: 28px;
+          margin-bottom: 80px;
           background-color: rgba(255,255,255,0.5);
-          padding: 4vw;
-          border-radius: 8px;
+          padding: 40px;
+          border-radius: 20px;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
           margin-bottom: 80px;
       }
@@ -93,7 +93,7 @@ class guestCar extends HTMLElement {
         background-color: #F9AE22;
         font-weight: 500;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
         height: 45px;
         padding: 10px 15px;
@@ -146,7 +146,7 @@ class guestCar extends HTMLElement {
           padding: 4px 10px;
           color: white;
           font-size: 12px;
-          font-weight: bold;
+          font-weight: 600;
           border-radius: 12px;
       }
 
