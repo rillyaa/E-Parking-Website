@@ -75,12 +75,12 @@ class inputForm extends HTMLElement {
                 margin: auto;
                 margin-top: 28px;
                 margin-bottom: 80px;
+                padding: 40px 0;
                 line-height: 40px;
                 width: 60vw;
                 background-color: rgba(255,255,255,0.5);
                 border-radius: 20px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-                padding: 40px 0;
             }
 
             .input-form{
