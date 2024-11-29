@@ -21,7 +21,7 @@ class appBar extends HTMLElement {
                     
                         <!-- Dropdown Menu -->
                         <li class="menu-item dropdown">
-                            <a href="#" class="dropdown-toggle">Statistik Parkir</a>
+                            <a href="#stat-car" class="dropdown-toggle">Statistik Parkir</a>
                             <ul class="dropdown-menu statistik-parkir hidden">
                                 <li><a href="#stat-car" class="dropdown-item" id="dropdown-mobil">Mobil</a></li>
                                 <li><a href="#stat-mot" class="dropdown-item" id="dropdown-motor">Motor</a></li>
