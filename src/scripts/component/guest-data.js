@@ -14,7 +14,7 @@ class guestData extends HTMLElement {
                 <div class="date-print">
                     <p>
                         <label for="daterange"><b>Tanggal : </b></label>
-                        <input type="text" class="input-box daterange" name="daterange" value="11/22/2024 - 12/12/2024" />
+                        <input type="text" class="input-box daterange" name="daterange" value="2024/11/12 - 2024/11/13" />
                     </p>
 
                     <button class="print"><box-icon type='solid' name='printer' style="margin-right: 6px;"></box-icon> Cetak</button>
@@ -173,7 +173,9 @@ class guestData extends HTMLElement {
         const tamuData = await tamuResponse.json();
         
         if (Array.isArray(tamuData.listTamu)) {
-          this.renderTable(tamuData.listTamu);
+          this.guestData = tamuData.listTamu; // Simpan data di properti kelas
+          console.log('Data tamu:', this.guestData);
+          this.renderTable(this.guestData);
         } else {
           console.error('Expected an array but received:', tamuData);
           this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error: Data is not an array.</p>`;
@@ -219,74 +221,77 @@ class guestData extends HTMLElement {
         tbody.appendChild(row);
       });
     }    
+
+    filterDataByDateRange(startDate, endDate) {
+      const Swal = require('sweetalert2');
+      console.log('Memfilter data dengan tanggal:', startDate, endDate);
+      if (!Array.isArray(this.guestData)) {
+        console.error('Data tamu tidak valid:', this.guestData);
+        return;
+      }
+      const filteredData = this.guestData.filter(guest => {
+        const guestDate = guest.tanggal.split('T')[0]; // "2024-11-13"
+        return guestDate >= startDate && guestDate <= endDate;
+      });
+      console.log('Data setelah difilter:', filteredData);
+      // this.renderTable(filteredData);
+
+      if (filteredData.length === 0) {
+        // Menampilkan SweetAlert jika tidak ada data ditemukan
+        Swal.fire({
+          title: 'Data Tidak Ditemukan',
+          text: 'Tidak ada data tamu yang sesuai dengan rentang tanggal yang Anda pilih.',
+          icon: 'warning',
+          confirmButtonText: 'Tutup'
+        });
+    
+        // Jika tidak ada data yang sesuai, render semua data tamu
+        this.renderTable(this.guestData);
+      } else {
+        // Menampilkan data yang sudah difilter
+        console.log('Data setelah difilter:', filteredData);
+        this.renderTable(filteredData);
+        this.filteredData = filteredData;
+      }
+    }
+    
+  
+    displayError(message) {
+      const tbody = this.shadowRoot.querySelector('#guest-rows');
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:red;">${message}</td></tr>`;
+    }
   
     connectedCallback() {
       this.fetchData();
 
-      // Inisialisasi daterangepicker
+      // Inisialisasi date range picker
       const daterangeInput = this.shadowRoot.querySelector('.daterange');
-      $(daterangeInput).daterangepicker({
-        opens: 'left',
-        locale: {
-          format: 'MM/DD/YYYY'
-        }
-      }, (start, end) => {
-        console.log("Selected range: " + start.format('YYYY-MM-DD') + " to " + end.format('YYYY-MM-DD'));
-        // Anda dapat melakukan sesuatu dengan tanggal yang dipilih
-        this.handleDateRangeSelection(start, end);
-      });
+      if (typeof $(daterangeInput).daterangepicker === 'function') {
+        $(daterangeInput).daterangepicker(
+          {
+            opens: 'left',
+            locale: { format: 'YYYY/MM/DD' }
+          },
+          (start, end) => {
+            const startDate = start.format('YYYY-MM-DD');
+            const endDate = end.format('YYYY-MM-DD');
+            this.filterDataByDateRange(startDate, endDate);
+          }
+        );
+      } else {
+        console.error('daterangepicker library is not loaded.');
+      }
 
       // Event listener untuk tombol cetak
       this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
         try {
-          // Belum menerapkan Filter Tanggal, masih PR 
-          const response = await fetch('http://localhost:5000/api/tamu', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-          });
-          const result = await response.json();
-
-          console.log('Respons API:', result);
-  
-          // checking data array 
-          if (result.message === 'Tamu Fetched Successfully' && Array.isArray(result.listTamu)) {
-            printData(result.listTamu); 
-          } else {
-            console.error('Failed to fetch printable data:', result.message);
-            alert('Gagal mengambil data untuk cetak.');
-          }
+          const dataToPrint = this.filteredData || this.guestData; // Gunakan data yang difilter jika ada, atau data semua tamu
+          printData(dataToPrint);
         } catch (error) {
           console.error('Error fetching printable data:', error);
           alert('Terjadi kesalahan saat mengambil data untuk cetak.');
         }
       });
-    }
-    
-    handleDateRangeSelection(start, end) {
-      const startDate = start.format('YYYY-MM-DD');
-      const endDate = end.format('YYYY-MM-DD');
-      
-      // Ambil data dari API dengan filter tanggal
-      this.fetchFilteredData(startDate, endDate);
-    }
-    
-    async fetchFilteredData(startDate, endDate) {
-      try {
-        const response = await fetch(`http://localhost:5000/api/guestData?start=${startDate}&end=${endDate}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await response.json();
-        if (Array.isArray(data.listTamu)) {
-          this.renderTable(data.listTamu);
-        } else {
-          console.error('Expected an array but received:', data);
-          this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error: Data is not an array.</p>`;
-        }
-      } catch (error) {
-        console.error('Failed to fetch filtered data:', error.message);
-        this.shadowRoot.querySelector('.data-guest').innerHTML = `<p>Error loading data.</p>`;
-      }
     }
   }
   
@@ -321,6 +326,19 @@ class guestData extends HTMLElement {
     // Membuat Format Tabel untuk DiPrint
     data.forEach((row, index) => {
       let durasiParkir = '-';
+
+      // Memformat waktu checkin dan checkout
+      const formatWaktu = (datetime) => {
+        const date = new Date(datetime);
+        return !isNaN(date) ? `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}` : '-';
+      };
+
+      const waktuCheckin = formatWaktu(row.waktu_checkin);
+      let waktuCheckout = '-';
+      if (row.waktu_checkout) {
+        waktuCheckout = formatWaktu(row.waktu_checkout);
+      }
+
       if (row.waktu_checkin && row.waktu_checkout) {
         const checkin = new Date(row.waktu_checkin);
         const checkout = new Date(row.waktu_checkout);
@@ -329,8 +347,7 @@ class guestData extends HTMLElement {
           const selisihMs = checkout - checkin; // Selisih dalam milidetik
           const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
           const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
-          const durasiDetik = Math.floor((selisihMs % (1000 * 60)) / 1000);
-          durasiParkir = `${durasiJam} jam ${durasiMenit} menit ${durasiDetik} detik`;
+          durasiParkir = `${durasiJam} jam ${durasiMenit} menit`;
         }
       }
 
@@ -344,8 +361,8 @@ class guestData extends HTMLElement {
           <td>${row.no_telp}</td>
           <td>${row.jenis_kendaraan}</td>
           <td>${row.catatan}</td>
-          <td>${row.waktu_checkin}</td>
-          <td>${row.waktu_checkout}</td>
+          <td>${waktuCheckin}</td>
+          <td>${waktuCheckout}</td>
           <td>${durasiParkir}</td>
         </tr>
       `);
