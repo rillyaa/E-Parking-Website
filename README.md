@@ -1,5 +1,8 @@
 # E-Parking-Website
-This project is part of an internship at Polda, focused on developing a web-based E-Parking system. The website allows users to perform check-in and check-out activities at parking facilities and manages real-time parking capacity.
+This project is part of an internship at Polda, focused on developing a web-based E-Parking system. 
+The website allows users to perform check-in and check-out activities at parking facilities and manages real-time parking capacity.
+
+<img src="./src/public/img/logo_eparking.png" alt="Logo E-Parking" width="230" align="right">
 
 **Authors :**
 | Name                              | NIM         | Universitas        |
@@ -28,8 +31,11 @@ This project is part of an internship at Polda, focused on developing a web-base
 **Tools**: 
 ![XAMPP](https://img.shields.io/badge/XAMPP-FB7A24?style=for-the-badge&logo=XAMPP&logoColor=white)
 ![.ENV](https://img.shields.io/badge/.ENV-ECD53F?style=for-the-badge&logo=.ENV&logoColor=000000)
+<br>
 
-**Interface**:
+<br>
+
+## Website Interface
 Input Form
 <br>
 ![input-form](https://github.com/user-attachments/assets/13c9d578-2d46-47d9-8133-e9d46c9aa52f)
