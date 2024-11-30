@@ -165,7 +165,8 @@ class guestMot extends HTMLElement {
   
     async fetchData() {
       try {
-        const tamuResponse = await fetch('http://localhost:5000/api/guestByType', {
+        const apiURL = process.env.URL_API
+        const tamuResponse = await fetch(`${apiURL}/guestByType`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ jenis_kendaraan: 'Motor'}),
@@ -234,10 +235,8 @@ class guestMot extends HTMLElement {
         return guestDate >= startDate && guestDate <= endDate;
       });
       console.log('Data setelah difilter:', filteredData);
-      // this.renderTable(filteredData);
 
       if (filteredData.length === 0) {
-        // Menampilkan SweetAlert jika tidak ada data ditemukan
         Swal.fire({
           title: 'Data Tidak Ditemukan',
           text: 'Tidak ada data tamu yang sesuai dengan rentang tanggal yang Anda pilih.',
@@ -245,10 +244,8 @@ class guestMot extends HTMLElement {
           confirmButtonText: 'Tutup'
         });
     
-        // Jika tidak ada data yang sesuai, render semua data tamu
         this.renderTable(this.guestMot);
       } else {
-        // Menampilkan data yang sudah difilter
         console.log('Data setelah difilter:', filteredData);
         this.renderTable(filteredData);
         this.filteredData = filteredData;
@@ -276,10 +273,9 @@ class guestMot extends HTMLElement {
         console.error('daterangepicker library is not loaded.');
       }
 
-      // Event listener untuk tombol cetak
       this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
         try {
-          const dataToPrint = this.filteredData || this.guestMot; // Gunakan data yang difilter jika ada, atau data semua tamu
+          const dataToPrint = this.filteredData || this.guestMot; 
           printData(dataToPrint);
         } catch (error) {
           console.error('Error fetching printable data:', error);
@@ -317,11 +313,9 @@ class guestMot extends HTMLElement {
       </tr>
     `);
   
-    // Membuat Format Tabel untuk DiPrint
     data.forEach((row, index) => {
       let durasiParkir = '-';
 
-      // Memformat waktu checkin dan checkout
       const formatWaktu = (datetime) => {
         const date = new Date(datetime);
         return !isNaN(date) ? `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}` : '-';
@@ -339,7 +333,7 @@ class guestMot extends HTMLElement {
         const checkout = new Date(row.waktu_checkout);
 
         if (!isNaN(checkin) && !isNaN(checkout)) {
-          const selisihMs = checkout - checkin; // Selisih dalam milidetik
+          const selisihMs = checkout - checkin; 
           const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
           const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
           const durasiDetik = Math.floor((selisihMs % (1000 * 60)) / 1000);
@@ -367,7 +361,6 @@ class guestMot extends HTMLElement {
     printWindow.document.write('</table>');
     printWindow.document.close();
   
-    // Cetak
     printWindow.print();
   }
   

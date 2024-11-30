@@ -165,7 +165,8 @@ class guestCar extends HTMLElement {
   
     async fetchData() {
       try {
-        const tamuResponse = await fetch('http://localhost:5000/api/guestByType', {
+        const apiURL = process.env.URL_API
+        const tamuResponse = await fetch(`${apiURL}/guestByType`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ jenis_kendaraan: 'Mobil'}),
@@ -174,7 +175,6 @@ class guestCar extends HTMLElement {
         const tamuData = await tamuResponse.json();
         
         if (Array.isArray(tamuData.DataTamu)) {
-          // this.renderTable(tamuData.DataTamu);
           this.guestCar = tamuData.DataTamu;
           console.log('Data Tamu dengan Mobil: ', this.guestCar);
           this.renderTable(this.guestCar);
@@ -237,7 +237,6 @@ class guestCar extends HTMLElement {
       console.log('Data setelah difilter: ', filteredData);
 
       if (filteredData.length === 0) {
-        // Menampilkan SweetAlert jika tidak ada data ditemukan
         Swal.fire({
           title: 'Data Tidak Ditemukan',
           text: 'Tidak ada data tamu yang sesuai dengan rentang tanggal yang Anda pilih.',
@@ -245,10 +244,8 @@ class guestCar extends HTMLElement {
           confirmButtonText: 'Tutup'
         });
     
-        // Jika tidak ada data yang sesuai, render semua data tamu
         this.renderTable(this.guestCar);
       } else {
-        // Menampilkan data yang sudah difilter
         console.log('Data setelah difilter:', filteredData);
         this.renderTable(filteredData);
         this.filteredData = filteredData;
@@ -320,7 +317,7 @@ class guestCar extends HTMLElement {
     // Membuat Format Tabel untuk DiPrint
     data.forEach((row, index) => {
       let durasiParkir = '-';
-      // Memformat waktu checkin dan checkout
+      
       const formatWaktu = (datetime) => {
         const date = new Date(datetime);
         return !isNaN(date) ? `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}` : '-';
@@ -337,7 +334,7 @@ class guestCar extends HTMLElement {
         const checkout = new Date(row.waktu_checkout);
 
         if (!isNaN(checkin) && !isNaN(checkout)) {
-          const selisihMs = checkout - checkin; // Selisih dalam milidetik
+          const selisihMs = checkout - checkin; 
           const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
           const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
           const durasiDetik = Math.floor((selisihMs % (1000 * 60)) / 1000);
@@ -365,7 +362,6 @@ class guestCar extends HTMLElement {
     printWindow.document.write('</table>');
     printWindow.document.close();
   
-    // Cetak
     printWindow.print();
   }
   

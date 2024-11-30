@@ -165,14 +165,14 @@ class checkIn extends HTMLElement {
         shadow.appendChild(checkin);
         shadow.appendChild(style);
 
+        const apiURL = process.env.URL_API
         const carCard = shadow.querySelector('#car-card button');
         carCard.addEventListener('click', async () => {
             const tamuData = JSON.parse(localStorage.getItem('tamuData'));
             tamuData.jenis_kendaraan = 'Mobil';
 
             try {
-                // First, call createTamu to perform the check-in
-                const response = await fetch('http://localhost:5000/api/createTamu', {
+                const response = await fetch(`${apiURL}/createTamu`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(tamuData),
@@ -181,7 +181,7 @@ class checkIn extends HTMLElement {
                 const result = await response.json();
 
                 if (result && !result.error) {
-                    const kapasitasResponse = await fetch('http://localhost:5000/api/kapasitas', {
+                    const kapasitasResponse = await fetch(`${apiURL}/kapasitas`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ jenis_kendaraan: 'Mobil' }),
@@ -221,10 +221,10 @@ class checkIn extends HTMLElement {
         const motorCard = shadow.querySelector('#motor-card button');
         motorCard.addEventListener('click', async () => {
             const tamuData = JSON.parse(localStorage.getItem('tamuData'));
-            tamuData.jenis_kendaraan = 'Motor';  // Menambahkan jenis kendaraan
+            tamuData.jenis_kendaraan = 'Motor';  
 
             try {
-                const response = await fetch('http://localhost:5000/api/createTamu', {
+                const response = await fetch(`${apiURL}/createTamu`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(tamuData),
@@ -233,7 +233,7 @@ class checkIn extends HTMLElement {
                 const result = await response.json();
 
                 if (result && !result.error) {
-                    const kapasitasResponse = await fetch('http://localhost:5000/api/kapasitas', {
+                    const kapasitasResponse = await fetch(`${apiURL}/kapasitas`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ jenis_kendaraan: 'Motor' }),

@@ -304,15 +304,15 @@ class appBar extends HTMLElement {
 
         menuButton.addEventListener('click', (event) => {
             event.stopPropagation();
-            // Toggle kelas 'visible' pada navbar
+            
             const navbar = shadow.querySelector('.navbar');
             navbar.classList.toggle('visible');
 
             // Ganti ikon
             if (navbar.classList.contains('visible')) {
-                menuIcon.setAttribute('name', 'x'); // Ganti ikon menjadi 'x' saat menu terbuka
+                menuIcon.setAttribute('name', 'x'); 
             } else {
-                menuIcon.setAttribute('name', 'menu'); // Ganti ikon kembali menjadi 'menu' saat menu tertutup
+                menuIcon.setAttribute('name', 'menu'); 
             }
         });
 
@@ -324,13 +324,9 @@ class appBar extends HTMLElement {
             }
         });
 
-        // Dropdown toggle on hover
-        // Dropdown toggle on hover and click
-        // Dropdown toggle on hover (use CSS for hover instead of JS)
         const dropdown = shadow.querySelectorAll('.dropdown');
         const dropdownMenu = shadow.querySelectorAll('.dropdown-menu');
 
-        // Hover functionality (CSS will handle this, no need for JS)
         dropdown.addEventListener('mouseenter', () => {
             dropdownMenu.classList.remove('hidden'); // Show dropdown
         });
@@ -341,9 +337,9 @@ class appBar extends HTMLElement {
 
         // Click functionality (toggle visibility)
         dropdown.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevents the click from propagating to document
-            dropdownMenu.classList.toggle('hidden'); // Toggle visibility
-            dropdown.classList.toggle('active'); // Optional, for styling when clicked
+            event.stopPropagation(); 
+            dropdownMenu.classList.toggle('hidden'); 
+            dropdown.classList.toggle('active'); 
         });
 
         //event listener statistik mobil
