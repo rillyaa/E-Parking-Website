@@ -165,7 +165,8 @@ class guestData extends HTMLElement {
   
     async fetchData() {
       try {
-        const tamuResponse = await fetch('http://localhost:5000/api/guestData', {
+        const apiURL = process.env.URL_API
+        const tamuResponse = await fetch(`${apiURL}/guestData`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -285,7 +286,7 @@ class guestData extends HTMLElement {
       // Event listener untuk tombol cetak
       this.shadowRoot.querySelector('.print').addEventListener('click', async () => {
         try {
-          const dataToPrint = this.filteredData || this.guestData; // Gunakan data yang difilter jika ada, atau data semua tamu
+          const dataToPrint = this.filteredData || this.guestData; 
           printData(dataToPrint);
         } catch (error) {
           console.error('Error fetching printable data:', error);
@@ -327,7 +328,6 @@ class guestData extends HTMLElement {
     data.forEach((row, index) => {
       let durasiParkir = '-';
 
-      // Memformat waktu checkin dan checkout
       const formatWaktu = (datetime) => {
         const date = new Date(datetime);
         return !isNaN(date) ? `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}` : '-';
@@ -344,7 +344,7 @@ class guestData extends HTMLElement {
         const checkout = new Date(row.waktu_checkout);
 
         if (!isNaN(checkin) && !isNaN(checkout)) {
-          const selisihMs = checkout - checkin; // Selisih dalam milidetik
+          const selisihMs = checkout - checkin; 
           const durasiJam = Math.floor(selisihMs / (1000 * 60 * 60));
           const durasiMenit = Math.floor((selisihMs % (1000 * 60 * 60)) / (1000 * 60));
           durasiParkir = `${durasiJam} jam ${durasiMenit} menit`;
@@ -371,7 +371,6 @@ class guestData extends HTMLElement {
     printWindow.document.write('</table>');
     printWindow.document.close();
   
-    // Cetak
     printWindow.print();
   }
   

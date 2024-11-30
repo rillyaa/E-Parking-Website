@@ -94,7 +94,8 @@ class statMot extends HTMLElement {
 
     async fetchData() {
         try {
-            const response = await fetch('http://localhost:5000/api/statistik', {
+            const apiURL = process.env.URL_API
+            const response = await fetch(`${apiURL}/statistik`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ jenis_kendaraan: 'Motor' })
@@ -106,7 +107,6 @@ class statMot extends HTMLElement {
             if (responseData.data){
                 const data = responseData.data;
 
-                // Perbarui elemen dengan data yang diambil
                 const shadow = this.shadowRoot;
                 shadow.querySelector('#totalKapasitas').textContent = data.total_kapasitas;
                 shadow.querySelector('#totalPengunjung').textContent = data.total_pengunjung;

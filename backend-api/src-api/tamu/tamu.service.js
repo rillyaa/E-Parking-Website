@@ -1,22 +1,7 @@
 const pool = require('../../config/database.js');
-// const moment = require('moment');
 
 module.exports = {
-    getAllTamu: callback => {
-        pool.query(
-            `SELECT t.plat_nomor, t.nama, t.alamat, t.keperluan, t.jenis_kendaraan, t.no_telp, t.catatan, c.waktu_checkin, c.waktu_checkout FROM tamu t LEFT JOIN checkin c ON t.id_tamu = c.id_tamu;`,
-            [],
-            (error, results, fields) => {
-                if(error){
-                    return callback(error);
-                }
-                return callback(null, results);
-            }
-        )
-    }, 
-
     createTamu: (data, callback) => {
-        // const formattedDate = moment(data.tanggal).format("DD-MM-YYYY");
         pool.query(
             `SELECT kapasitas_tersedia FROM parkir WHERE jenis_kendaraan = ?`,
             [data.jenis_kendaraan],
@@ -129,46 +114,6 @@ module.exports = {
             }
         );
     },
-
-    // checkoutTamu: (data, callback) => {
-    //     pool.query(
-    //         `SELECT checkin.id_tamu, tamu.jenis_kendaraan FROM checkin
-    //         JOIN tamu ON checkin.id_tamu = tamu.id_tamu
-    //         WHERE tamu.nama = ? AND checkin.waktu_checkout IS NULL`,
-    //         [data.nama],
-    //         (error, results) => {
-    //             if(error){
-    //                 return callback(error);
-    //             }
-    //             if(results.length === 0){
-    //                 return callback(null, { message: 'Tidak ada data tamu dengan nama tersebut atau tamu sudah checkout.' });
-    //             }
-
-    //             const {id_tamu, jenis_kendaraan} = results[0];
-
-    //             pool.query(
-    //                 `UPDATE checkin SET waktu_checkout = CURRENT_TIMESTAMP WHERE id_tamu = ?`,
-    //                 [id_tamu],
-    //                 (error, results) => {
-    //                     if(error){
-    //                         return callback(error);
-    //                     }
-
-    //                     pool.query(
-    //                         `UPDATE parkir SET kapasitas_tersedia = kapasitas_tersedia + 1 WHERE jenis_kendaraan = ?`,
-    //                         [jenis_kendaraan],
-    //                         (error, results) => {
-    //                             if(error){
-    //                                 return callback(error);
-    //                             }
-    //                             return callback(null, { message: 'Tamu Berhasil Checkout dan Data parkir diperbarui' })
-    //                         }
-    //                     );
-    //                 }
-    //             );
-    //         }
-    //     );
-    // },
 
     checkoutTamu: (data, callback) => {
         pool.query(
@@ -291,5 +236,4 @@ module.exports = {
             }
         )
     },
-    // Masih PR benerin nama API
 }

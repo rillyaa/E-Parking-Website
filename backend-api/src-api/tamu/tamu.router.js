@@ -1,5 +1,4 @@
-const { 
-    getAllTamu, 
+const {  
     createTamu, 
     deleteTamu, 
     checkoutTamu, 
@@ -10,7 +9,6 @@ const {
 
 const router = require('express').Router();
 
-router.get('/tamu', getAllTamu);
 router.get('/guestData', getGuestData);
 router.post('/createTamu', createTamu);
 router.post('/checkoutTamu', checkoutTamu);

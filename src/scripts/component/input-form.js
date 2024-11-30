@@ -131,7 +131,6 @@ class inputForm extends HTMLElement {
         shadow.appendChild(form);
         shadow.appendChild(style);
 
-        // Tangkap elemen form dan tambahkan event listener submit
         const guestBookForm = shadow.querySelector('#guest-book-form');
 
         guestBookForm.addEventListener('submit', async (event) => {

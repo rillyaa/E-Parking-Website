@@ -1,5 +1,4 @@
-const { 
-    getAllTamu, 
+const {  
     createTamu, 
     deleteTamu, 
     checkoutTamu, 
@@ -10,20 +9,6 @@ const {
 } = require('./tamu.service');
 
 module.exports = {
-    getAllTamu: (req, res) => {
-        getAllTamu((err, results) => {
-            if(err){
-                console.log(err);
-                return;
-            }
-            return res.json({
-                error: false,
-                message: 'Tamu Fetched Successfully',
-                listTamu: results
-            });
-        });
-    },
-
     getGuestData: (req, res) => {
         getGuestData((err, results) => {
             if(err){

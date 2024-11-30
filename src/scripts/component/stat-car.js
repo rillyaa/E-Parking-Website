@@ -90,26 +90,24 @@ class statCar extends HTMLElement {
         shadow.appendChild(statcar);
         shadow.appendChild(style);
 
-        // Panggil metode fetchData setelah komponen dibuat
         this.fetchData();
     }
 
     async fetchData() {
         try {
-            // Ambil data kapasitas parkir dari endpoint /kapasitas
-            const response = await fetch('http://localhost:5000/api/statistik', {
+            const apiURL = process.env.URL_API
+            const response = await fetch(`${apiURL}/statistik`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ jenis_kendaraan: 'Mobil' })
             });
 
             const responseData = await response.json();
-            console.log('Response Data:', responseData); // Cek apakah ini JSON atau HTML
+            console.log('Response Data:', responseData); 
 
             if (responseData.data){
                 const data = responseData.data;
 
-                // Perbarui elemen dengan data yang diambil
                 const shadow = this.shadowRoot;
                 shadow.querySelector('#totalKapasitas').textContent = data.total_kapasitas;
                 shadow.querySelector('#totalPengunjung').textContent = data.total_pengunjung;

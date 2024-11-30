@@ -106,15 +106,12 @@ class inputCof extends HTMLElement {
         shadow.appendChild(style);
 
         inputcof.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Mencegah halaman reload saat submit form
+            e.preventDefault();
             
-            // Ambil plat nomor dari input form
             const platNomor = shadow.getElementById('plat_nomor').value;
             
-            // Ambil data tamu dari localStorage yang sudah ada
             let tamuData = JSON.parse(localStorage.getItem('tamuData'));
             
-            // Pastikan data tamu dan jenis kendaraan ada di localStorage
             if (!tamuData) {
                 Swal.fire({
                     icon: 'error',
@@ -125,33 +122,30 @@ class inputCof extends HTMLElement {
                 return;
             }
         
-            // Gabungkan data dari input dan localStorage
             tamuData = {
-                plat_nomor: platNomor, // Plat nomor yang baru diinput
-                jenis_kendaraan: tamuData.jenis_kendaraan // Jenis kendaraan dari localStorage
+                plat_nomor: platNomor, 
+                jenis_kendaraan: tamuData.jenis_kendaraan 
             };
         
             try {
-                const response = await fetch('http://localhost:5000/api/checkoutTamu', {
+                const apiURL = process.env.URL_API
+                const response = await fetch(`${apiURL}/checkoutTamu`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(tamuData),
                 });
         
-                // Cek apakah response sukses
                 const result = await response.json();
         
                 if (response.ok) {
-                    // Jika sukses, tampilkan pesan sukses
                     Swal.fire({
                         icon: 'success',
                         title: 'Check-Out berhasil',
-                        text: result.message, // Pesan dari API
+                        text: result.message, 
                         confirmButtonText: 'Tutup'
                     });
-                    window.location.hash = '#check-out'; // Redirect ke halaman checkout setelah berhasil
+                    window.location.hash = '#check-out'; 
                 } else {
-                    // Jika API gagal, tampilkan pesan error
                     Swal.fire({
                         icon: 'error',
                         title: 'Gagal Check-Out',
@@ -160,7 +154,6 @@ class inputCof extends HTMLElement {
                     });
                 }
             } catch (error) {
-                // Menangani error dari request fetch
                 console.error('Error fetching API:', error);
                 Swal.fire({
                     icon: 'error',
@@ -170,7 +163,6 @@ class inputCof extends HTMLElement {
                 });
             }
         
-            // Validasi input sebelum melanjutkan
             if (shadow.getElementById('plat_nomor').checkValidity()) {
                 shadow.getElementById('plat_nomor').reportValidity();
             }
