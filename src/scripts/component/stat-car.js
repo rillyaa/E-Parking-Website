@@ -59,6 +59,7 @@ class statCar extends HTMLElement {
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
+                padding-bottom: 52px;
             }
                 
             .card{
