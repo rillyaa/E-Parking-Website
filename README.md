@@ -36,46 +36,62 @@ The website allows users to perform check-in and check-out activities at parking
 <br>
 
 ## Website Interface
-Input Form
+**1. Input Form**
+<br>
+Visitors are asked to fill in the Visitor Guest Book, the personal data information include: vehicle license plate, visitor's full name, address, visitor's purpose, and visitor's telephone number.
 <br>
 ![input-form](https://github.com/user-attachments/assets/13c9d578-2d46-47d9-8133-e9d46c9aa52f)
+<br><br>
+**2. Choose vehicle**
 <br>
-Choose vehicle
+Choose vehicle after input data
 <br>
 ![checkin](https://github.com/user-attachments/assets/5eb06afd-8c59-411c-8bc3-bbd9cecb94cc)
+<br><br>
+**3. Checkin done**
 <br>
-Checkin done
+Notification if check in is success.
 <br>
 ![checkin-done](https://github.com/user-attachments/assets/f162868d-6bec-4bbb-bc88-3c876d9e65c6)
+<br><br>
+**4. Motorcycle Statistic**
 <br>
-Motorcycle Statistic
+The parking statistics page is divided into 2 types, namely for statistics for car and motorcycle vehicle types. This page displays information about the total initial parking capacity provided by POLDA DIY for visitors, the total visitors for each type of vehicle, and the total remaining parking capacity or that can be used by other visitors based on the type of vehicle to be selected.
 <br>
 ![stat-mot](https://github.com/user-attachments/assets/ff24b665-0aef-4bdc-8896-84d623eeadb5)
 <br>
-Car Statistic
+**5. Car Statistic**
 <br>
 ![stat-car](https://github.com/user-attachments/assets/2c9d9f31-34ee-46f5-98c3-d77f0633e76a)
+<br><br>
+**6. All Guest Data**
 <br>
-All Guest Data
+The visitor data page is divided into 3 types, namely combined data for all visitors using both cars and motorbikes, data for visitors using cars, and data for visitors using motorbikes.
 <br>
 ![guest-data](https://github.com/user-attachments/assets/58353fdc-29f0-4009-9051-c91e6214dd47)
 <br>
-Motorcycle Guest Data
+**7. Motorcycle Guest Data**
 <br>
 ![guest-mot](https://github.com/user-attachments/assets/39513200-20a2-4ef7-999a-0254d04705e4)
 <br>
-Car Guest Data
+**8. Car Guest Data**
 <br>
 ![guest-car](https://github.com/user-attachments/assets/ef76b91c-b174-4637-b559-e2e71e720e04)
+<br><br>
+**9. Checkout**
 <br>
-Checkout
+Visitors who have completed their business in the DIY POLDA area are asked to check out. This aims to update the data in the system so that the available parking capacity can be displayed in real-time. When checking out, visitors are asked to select the type of vehicle that matches the previous choice.
 <br>
 ![checkout](https://github.com/user-attachments/assets/e2e161a9-ef90-4833-a273-cca97780130a)
 <br>
-Checkout Form
+**10. Checkout Form**
+<br>
+After that, the system will ask visitors to enter the vehicle license plate number to update the parking capacity in the system.
 <br>
 ![form-checkout](https://github.com/user-attachments/assets/4d31e90a-f653-46bb-81ee-b54efce4b94d)
 <br>
-Checkout done
+**11. Checkout done**
+<br>
+Notification if check out is success.
 <br>
 ![checkout-done](https://github.com/user-attachments/assets/a7a541fa-3a05-4ec1-9668-36d66be94dc6)
