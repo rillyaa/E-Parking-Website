@@ -1,10 +1,10 @@
 # E-Parking-Website
-![cover-github-magang-polda](https://github.com/user-attachments/assets/f6cd9c40-45de-45f2-9a0a-2c500d503fb9)
+![cover-github-magang-polda](https://github.com/user-attachments/assets/bba9fcb2-39c4-4c41-8487-17364bb7095a)
 <br>
 This project is part of an internship at Polda, focused on developing a web-based E-Parking system. 
 The website allows users to perform check-in and check-out activities at parking facilities and manages real-time parking capacity.
 
-<img src="./src/public/img/logo_eparking.png" alt="Logo E-Parking" width="230" align="right">
+<img src="./src/public/img/logo_eparking.png" alt="Logo E-Parking" width="200" align="right">
 
 > [Installation and How To Use](#installation)
 
@@ -42,7 +42,7 @@ The website allows users to perform check-in and check-out activities at parking
 ## Website Interface
 ### Input Form Interface
 > Visitors are asked to fill in the Visitor Guest Book, the personal data information include: vehicle license plate, visitor's full name, address, visitor's purpose, and    visitor's telephone number.
-![input-form](https://github.com/user-attachments/assets/1740ff87-ad8b-45da-bc84-034ac2d75537)
+![input-form](https://github.com/user-attachments/assets/1aa2b649-8707-447f-ad83-21c47603d381)
 
 
 ### Choose Vehicle
@@ -107,7 +107,7 @@ The website allows users to perform check-in and check-out activities at parking
 
 **3. Configure the environment file**
   - Rename the `.env.example` file to `.env`
-  - Ensure the variables in the `.env` file are configured correctly, such as database information (user, password, database name, host, port, and API url)
+  - Ensure the variables in the `.env` file are configured correctly, such as user, password, database name, host, port, and API url
 
 **4. Create the database**
   - Open phpMyAdmin or other MySQL client
