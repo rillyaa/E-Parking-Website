@@ -4,7 +4,11 @@ The website allows users to perform check-in and check-out activities at parking
 
 <img src="./src/public/img/logo_eparking.png" alt="Logo E-Parking" width="200" align="right">
 
-> [Installation and How To Use](#installation)
+> [Website Interface](#website-interface)
+
+> [API Endpoint](#api-endpoint)
+
+> [Installation and How To Use](#installation-and-how-to-use)
 
 **Authors :**
 | Name                              | NIM         | Universitas        |
@@ -98,7 +102,7 @@ We created this API to make managing guest data simple and efficient. It provide
 |`/checkoutTamu`|`POST`|Show a message indicating whether a guest has checked out or not                                  |
 
 
-## Installation
+## Installation and How to Use
 **1. Clone or download the source code**
    - Clone the repository using the following command:
      ```bash
