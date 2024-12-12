@@ -1,6 +1,4 @@
 # E-Parking-Website
-![cover-github-magang-polda](https://github.com/user-attachments/assets/bba9fcb2-39c4-4c41-8487-17364bb7095a)
-<br>
 This project is part of an internship at Polda, focused on developing a web-based E-Parking system. 
 The website allows users to perform check-in and check-out activities at parking facilities and manages real-time parking capacity.
 
@@ -85,6 +83,19 @@ The website allows users to perform check-in and check-out activities at parking
 ### Checkout Done
 > Notification if check out is success.
 ![checkout-done](https://github.com/user-attachments/assets/a7a541fa-3a05-4ec1-9668-36d66be94dc6)
+
+
+## API Endpoint
+We created this API to make managing guest data simple and efficient. It provides functionality for recording guest check-ins and check-outs, tracking capacity, and viewing statistics based on different criteria.
+
+|Endpoint    |Method |Description                                                                                         |
+|-------------|--------|--------------------------------------------------------------------------------------------------|
+|`/createTamu`|`POST`  |Create new guest data                                                                             |
+|`/guestData`|`GET`    |Display all stored guest data                                                                     |
+|`/guestByType`|`POST` |View guest information based on the type of vehicle                                               |
+|`/kapasitas`|`POST`   |Track total and available parking capacity                                                        |
+|`/statistik`|`POST`   |Display statistical data on total capacity, total visitors, and available capacity by vehicle type|
+|`/checkoutTamu`|`POST`|Show a message indicating whether a guest has checked out or not                                  |
 
 
 ## Installation
